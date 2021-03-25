@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_author">
+
+
+    <fragment
+        android:id="@+id/navigation_author"
+        android:name="space.adebyat.adebyat.ui.author.AuthorFragment"
+        android:label="@string/author"
+        tools:layout="@layout/fragment_author">
+        <action
+            android:id="@+id/action_navigation_author_to_fragmentCreationList"
+            app:destination="@id/fragmentCreationList" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="space.adebyat.adebyat.ui.about.FragmentAbout"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about"/>
+    <fragment
+        android:id="@+id/navigation_filter"
+        android:name="space.adebyat.adebyat.ui.filter.FragmentFilter"
+        android:label="@string/filter"
+        tools:layout="@layout/fragment_filter"/>
+    <fragment
+        android:id="@+id/navigation_poetry"
+        android:name="space.adebyat.adebyat.ui.creation.poetry.FragmentPoetry"
+        android:label="@string/poetry"
+        tools:layout="@layout/fragment_poetry"/>
+    <fragment
+        android:id="@+id/navigation_prose"
+        android:name="space.adebyat.adebyat.ui.creation.prose.FragmentProse"
+        android:label="@string/prose"
+        tools:layout="@layout/fragment_prose"/>
+    <fragment
+        android:id="@+id/fragmentCreationList"
+        android:name="space.adebyat.adebyat.ui.creation.CreationListFragment"
+        android:label="FragmentCreationList"
+        tools:layout="@layout/fragment_creation_list">
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+</navigation>

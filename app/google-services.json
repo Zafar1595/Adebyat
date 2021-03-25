@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "190076320378",
+    "project_id": "qaraqalpaq-adebiyati",
+    "storage_bucket": "qaraqalpaq-adebiyati.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190076320378:android:55e49ba0a28077b707d9c3",
+        "android_client_info": {
+          "package_name": "space.adebyat.adebyat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190076320378-67m84cnis5ll5m9b0bo69lddvrkih32s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz_hiQT95U2jzswV3E9MByp64ePw4bb0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190076320378-67m84cnis5ll5m9b0bo69lddvrkih32s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190076320378:android:72ac9cdecdd1d40f07d9c3",
+        "android_client_info": {
+          "package_name": "space.literature.adebyat1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190076320378-67m84cnis5ll5m9b0bo69lddvrkih32s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz_hiQT95U2jzswV3E9MByp64ePw4bb0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190076320378-67m84cnis5ll5m9b0bo69lddvrkih32s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

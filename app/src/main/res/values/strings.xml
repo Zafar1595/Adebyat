@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Adebyat</string>
+
+    <string name="filter">Filer</string>
+    <string name="about">About</string>
+    <string name="author">Author</string>
+    <string name="poetry">Poetry</string>
+    <string name="prose">Prose</string>
+</resources>
