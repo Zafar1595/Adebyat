@@ -35,16 +35,16 @@ class AuthorFragment: Fragment(R.layout.fragment_author), AuthorView {
     }
 
     override fun setLoading(loading: Boolean) {
-//        if(loading) {
-//            binding.progressBarAuthor.visibility = View.VISIBLE
-//        }else{
-//            binding.progressBarAuthor.visibility = View.GONE
-//        }
+        if(loading) {
+            binding.progressBarAuthor.visibility = View.VISIBLE
+        }else{
+            binding.progressBarAuthor.visibility = View.GONE
+        }
     }
 
     override fun setData(autors: List<Autor>) {
         adapter.models = autors
-        //setLoading(false)
+        setLoading(false)
     }
 
     override fun showMessage(msg: String?) {

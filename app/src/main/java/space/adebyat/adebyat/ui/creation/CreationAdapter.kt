@@ -1,5 +1,8 @@
 package space.adebyat.adebyat.ui.creation
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
+import space.adebyat.adebyat.ui.MainActivity
+import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 
 class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
 
@@ -15,16 +20,18 @@ class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
         field = value
         notifyDataSetChanged()
     }
-
+    private var onItemClick:(departmentName: String)-> Unit = {}
+    fun setOnItemClickListener(onItemClick:(departmentName: String)-> Unit){
+        this.onItemClick = onItemClick
+    }
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(creation: Creation){
             itemView.findViewById<TextView>(R.id.textViewCreationName).text = creation.name
             itemView.findViewById<TextView>(R.id.textViewCreationGenre).text = creation.genre
-//            if(creation.direction == "poetry"){
-//
-//            }else if(creation.direction == "prose"){
-//
-//            }
+            itemView.setOnClickListener {
+                onItemClick.invoke(creation.name)
+            }
+
         }
     }
 

@@ -10,7 +10,7 @@ class AuthorPresenter(private val firebase: FirebaseManager) {
     }
 
     fun getAllAuthors(){
-        //view.setLoading(true)
+        view.setLoading(true)
         firebase.getAuthors(
             {
                 view.setData(it)
