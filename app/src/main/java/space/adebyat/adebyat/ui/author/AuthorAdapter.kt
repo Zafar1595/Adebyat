@@ -26,9 +26,8 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
 //    }
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(autor: Autor){
-            itemView.findViewById<TextView>(R.id.textViewPoetsName).text = "Autor ${autor.name}"
+            itemView.findViewById<TextView>(R.id.textViewPoetsName).text = autor.name
             itemView.findViewById<TextView>(R.id.textViewPoetsDate).text = autor.date
-            Log.d("Zafar","successful ${autor.name}")
             //image set
             itemView.setOnClickListener {
                 onItemClick.invoke(autor.name)

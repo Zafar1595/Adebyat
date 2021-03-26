@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
-import space.adebyat.adebyat.databinding.FragmentAuthorBinding
 
 class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationView{
 
@@ -25,7 +24,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         var str: String = arguments?.get("name") as String
 
         presenter.init(this)
-        presenter.getCreationAuthor(str)
+        presenter.getCreation(str)
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         Toast.makeText(view.context, str, Toast.LENGTH_LONG).show()
 
