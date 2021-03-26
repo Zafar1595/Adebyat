@@ -21,7 +21,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         presenter.init(this)
-        presenter.getCreation("poetry")
+        presenter.getCreation("Poeziya")
     }
 
     override fun setCreation(creation: List<Creation>) {

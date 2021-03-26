@@ -22,8 +22,20 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 }
     }
 
-    fun getCreationAuthors(onSuccess: (List<Creation>) -> Unit, onFailure: (msg: String?) -> Unit) {
-        db.collection("creation").get()
+    fun getCreation(onSuccess: (List<Creation>) -> Unit
+                    , onFailure: (msg: String?) -> Unit
+                    , str: String) {
+        var columnName: String = ""
+        if(str == "Poeziya" || str == "Proza"){
+            columnName = "direction"
+
+        }else{
+            columnName = "author"
+        }
+
+        db.collection("creation")
+                .whereEqualTo(columnName, str)
+                .get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Creation>()
                 it.documents.forEach { document ->
