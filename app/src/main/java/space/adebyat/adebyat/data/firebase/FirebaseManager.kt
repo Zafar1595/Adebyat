@@ -25,12 +25,11 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     fun getCreation(onSuccess: (List<Creation>) -> Unit
                     , onFailure: (msg: String?) -> Unit
                     , str: String) {
-        var columnName: String = ""
-        if(str == "Poeziya" || str == "Proza"){
-            columnName = "direction"
+        var columnName = if(str == "Poeziya" || str == "Proza"){
+            "direction"
 
         }else{
-            columnName = "author"
+            "author"
         }
 
         db.collection("creation")
