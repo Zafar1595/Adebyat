@@ -6,7 +6,8 @@ import space.adebyat.adebyat.data.Creation
 
 class FirebaseManager(private val db: FirebaseFirestore) {
 
-    fun getAuthors(onSuccess: (List<Autor>) -> Unit, onFailure: (msg: String?) -> Unit) {
+    fun getAuthors(onSuccess: (List<Autor>) -> Unit
+                   , onFailure: (msg: String?) -> Unit) {
         db.collection("autors").get()
                 .addOnSuccessListener {
                     val mList = mutableListOf<Autor>()
@@ -22,9 +23,9 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 }
     }
 
-    fun getCreation(onSuccess: (List<Creation>) -> Unit
-                    , onFailure: (msg: String?) -> Unit
-                    , str: String) {
+    fun getCreations(onSuccess: (List<Creation>) -> Unit
+                     , onFailure: (msg: String?) -> Unit
+                     , str: String) {
         var columnName = if(str == "Poeziya" || str == "Proza"){
             "direction"
 
@@ -49,4 +50,24 @@ class FirebaseManager(private val db: FirebaseFirestore) {
             }
     }
 
+
+    fun getCreation(onSuccess: (List<Creation>) -> Unit
+                    , onFailure: (msg: String?) -> Unit
+                    , str: String){
+        db.collection("creation")
+            .whereEqualTo("name", str)
+            .get()
+            .addOnSuccessListener {
+                val mList = mutableListOf<Creation>()
+                it.documents.forEach { document ->
+                    document.toObject(Creation::class.java)?.let { creation->
+                        mList.add(creation)
+                    }
+                }
+                onSuccess.invoke(mList)
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
 }

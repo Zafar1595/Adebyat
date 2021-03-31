@@ -10,7 +10,7 @@ class CreationPresenter(private val firebase: FirebaseManager) {
 
     fun getCreation(columnName: String){
         view.setLoading(true)
-        firebase.getCreation(
+        firebase.getCreations(
             {
                 view.setCreation(it)
             },
