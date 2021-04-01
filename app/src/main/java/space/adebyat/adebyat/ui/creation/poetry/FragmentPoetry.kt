@@ -24,6 +24,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
     private val adapterTheme = ThemeAdapter()
     private val presenter: CreationPresenter by inject()
     private var list: List<Creation> = listOf()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPoetryBinding.bind(view)

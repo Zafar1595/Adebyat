@@ -10,6 +10,10 @@ import space.adebyat.adebyat.data.Theme
 
 class ThemeAdapter: RecyclerView.Adapter<ThemeAdapter.ListViewHolder>() {
     var models: List<Theme> = listOf()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(theme: Theme){
