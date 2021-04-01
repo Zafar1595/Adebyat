@@ -1,10 +1,10 @@
 package space.adebyat.adebyat.data
 
 class DataModel {
-    fun getAuthors(): List<Autor>{
-        var mList: MutableList<Autor> = mutableListOf()
+    fun getAuthors(): List<Author>{
+        var mList: MutableList<Author> = mutableListOf()
         repeat(20){
-            mList.add(Autor(it.toString(),"Name $it", "","", "date $it"))
+            mList.add(Author(it.toString(),"Name $it", "","", "date $it"))
         }
         return mList
     }

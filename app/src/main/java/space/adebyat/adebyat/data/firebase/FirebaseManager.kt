@@ -1,18 +1,19 @@
 package space.adebyat.adebyat.data.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
-import space.adebyat.adebyat.data.Autor
+import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.data.Creation
+import space.adebyat.adebyat.data.Theme
 
 class FirebaseManager(private val db: FirebaseFirestore) {
 
-    fun getAuthors(onSuccess: (List<Autor>) -> Unit
+    fun getAuthors(onSuccess: (List<Author>) -> Unit
                    , onFailure: (msg: String?) -> Unit) {
         db.collection("autors").get()
                 .addOnSuccessListener {
-                    val mList = mutableListOf<Autor>()
+                    val mList = mutableListOf<Author>()
                     it.documents.forEach { document ->
-                        document.toObject(Autor::class.java)?.let { author->
+                        document.toObject(Author::class.java)?.let { author->
                             mList.add(author)
                         }
                     }
@@ -69,5 +70,22 @@ class FirebaseManager(private val db: FirebaseFirestore) {
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
             }
+    }
+
+    fun getThemes(onSuccess: (List<Theme>) -> Unit
+                  , onFailure: (msg: String?) -> Unit){
+        db.collection("theme").get()
+                .addOnSuccessListener {
+                    val mList = mutableListOf<Theme>()
+                    it.documents.forEach { document ->
+                        document.toObject(Theme::class.java)?.let { theme->
+                            mList.add(theme)
+                        }
+                    }
+                    onSuccess.invoke(mList)
+                }
+                .addOnFailureListener {
+                    onFailure.invoke(it.localizedMessage)
+                }
     }
 }

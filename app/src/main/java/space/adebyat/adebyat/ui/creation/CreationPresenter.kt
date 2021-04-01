@@ -20,4 +20,15 @@ class CreationPresenter(private val firebase: FirebaseManager) {
                 columnName
         )
     }
+
+    fun getThemes(){
+        firebase.getThemes(
+                {
+                    view.setThemes(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+    }
 }

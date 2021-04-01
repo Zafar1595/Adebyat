@@ -19,12 +19,23 @@
         android:visibility="invisible"
         />
 
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:queryHint="@string/search"
+        android:iconifiedByDefault="false"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_author"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 
