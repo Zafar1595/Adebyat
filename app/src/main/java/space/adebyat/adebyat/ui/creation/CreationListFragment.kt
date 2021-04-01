@@ -23,6 +23,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
     private val presenter: CreationPresenter by inject()
     lateinit var binding: FragmentCreationListBinding
     private var list: List<Creation> = listOf()
+    private var adapterTheme = ThemeAdapter()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,12 +31,15 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         binding = FragmentCreationListBinding.bind(view)
         binding.recyclerViewCreationList.adapter = adapter
         binding.recyclerViewCreationList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerViewThemes.adapter = adapterTheme
+
 
         var str: String = arguments?.get("name") as String
         Toast.makeText(view.context, str, Toast.LENGTH_LONG).show()
 
         presenter.init(this)
         presenter.getCreation(str)
+        presenter.getThemes()
 
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
@@ -77,7 +81,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
     }
 
     override fun setThemes(themes: List<Theme>) {
-        TODO("Not yet implemented")
+        adapterTheme.models = themes
     }
 
     fun search(creationName: String){

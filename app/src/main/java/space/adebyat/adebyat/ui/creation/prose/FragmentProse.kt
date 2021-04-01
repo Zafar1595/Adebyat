@@ -17,6 +17,7 @@ import space.adebyat.adebyat.databinding.FragmentProseBinding
 import space.adebyat.adebyat.ui.creation.CreationAdapter
 import space.adebyat.adebyat.ui.creation.CreationPresenter
 import space.adebyat.adebyat.ui.creation.CreationView
+import space.adebyat.adebyat.ui.creation.ThemeAdapter
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 
 class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
@@ -24,14 +25,18 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     private var adapter = CreationAdapter()
     private val presenter: CreationPresenter by inject()
     private var list: List<Creation> = listOf()
+    private var adapterTheme = ThemeAdapter()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProseBinding.bind(view)
         binding.recyclerViewProse.adapter = adapter
         binding.recyclerViewProse.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerViewThemes.adapter = adapterTheme
         presenter.init(this)
         presenter.getCreation("Proza")
+        presenter.getThemes()
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
             intent.putExtra("Creation", it)
@@ -69,7 +74,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     }
 
     override fun setThemes(themes: List<Theme>) {
-        TODO("Not yet implemented")
+        adapterTheme.models = themes
     }
 
     fun search(creationName: String){
