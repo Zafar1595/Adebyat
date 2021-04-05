@@ -10,14 +10,12 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
+import java.lang.Runnable
 
 class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
 
@@ -171,4 +169,10 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
     override fun showMessage(msg: String?) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaScope.cancel()
+    }
+
 }
