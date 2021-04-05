@@ -14,10 +14,16 @@ class ThemeAdapter: RecyclerView.Adapter<ThemeAdapter.ListViewHolder>() {
         field = value
         notifyDataSetChanged()
     }
-
+    private var onItemClick:(theme: String)-> Unit = {}
+    fun setOnItemClickListener(onItemClick:(theme: String)-> Unit){
+        this.onItemClick = onItemClick
+    }
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(theme: Theme){
             itemView.findViewById<TextView>(R.id.textViewTheme).text = theme.name
+            itemView.setOnClickListener {
+                onItemClick.invoke(theme.name)
+            }
         }
     }
 

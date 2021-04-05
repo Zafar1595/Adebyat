@@ -10,7 +10,10 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import org.koin.android.ext.android.bind
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
@@ -20,6 +23,8 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
 
 
     lateinit var binding: ActivityCreationWindowBinding
+    private val mediaJob = Job()
+    private val mediaScope = CoroutineScope(Dispatchers.Main + mediaJob)
     private lateinit var mp: MediaPlayer
     private var totalTime: Int = 0
     private var url = ""//"https://firebasestorage.googleapis.com/v0/b/my-first-project-in-fire-e3bc0.appspot.com/o/allmusics%2F5sta%20Family%20-%20%D0%92%D0%BC%D0%B5%D1%81%D1%82%D0%B5%20%D0%9C%D1%8B.mp3?alt=media&token=a9a639c9-4930-47c6-baba-f7fd824a1c3d"
@@ -34,9 +39,11 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
         var creationName = intent.getStringExtra("Creation")!!
         presenter.init(this)
         presenter.getCreation(creationName)
+
+
     }
 
-    private fun mediaPlayerInicialize(){
+    private fun mediaPlayerInitialization() = mediaScope.launch(Dispatchers.IO) {
         mp = MediaPlayer().apply {
             setAudioAttributes(
                     AudioAttributes.Builder()
@@ -50,20 +57,28 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
 
         mp.isLooping = true
         totalTime = mp.duration
+        runOnUiThread {
+            // Stuff that updates the UI
+            setLoadingPlaying(false)
+            progressBarSetPosition()
+        }
+    }
+
+    private fun progressBarSetPosition(){
         // Position Bar
         binding.positionBar.max = totalTime
         binding.positionBar.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                        if (fromUser) {
-                            mp.seekTo(progress)
-                        }
-                    }
-                    override fun onStartTrackingTouch(p0: SeekBar?) {
-                    }
-                    override fun onStopTrackingTouch(p0: SeekBar?) {
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        mp.seekTo(progress)
                     }
                 }
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+                }
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+                }
+            }
         )
         // Thread
         Thread(Runnable {
@@ -77,7 +92,6 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
                 }
             }
         }).start()
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -110,10 +124,6 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
     }
 
     fun playBtnClick(v: View) {
-        if(!isPlay) {
-            mediaPlayerInicialize()
-            isPlay = true
-        }
         if (mp.isPlaying) {
             // Stop
             mp.pause()
@@ -126,6 +136,16 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
         }
     }
 
+    private fun setLoadingPlaying(loading: Boolean){
+        if(loading){
+            binding.progressBarPlaying.visibility = View.VISIBLE
+            binding.playBtn.visibility = View.GONE
+        }else{
+            binding.progressBarPlaying.visibility = View.GONE
+            binding.playBtn.visibility = View.VISIBLE
+        }
+    }
+
     override fun setData(creation: Creation) {
         setLoading(false)
         binding.textViewCreationName.text = creation.name
@@ -135,6 +155,8 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
             binding.exoContainer.visibility = View.GONE
         }else {
             binding.exoContainer.visibility = View.VISIBLE
+            mediaPlayerInitialization()
+            setLoadingPlaying(true)
         }
     }
 

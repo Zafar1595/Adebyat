@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,6 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     private var list: List<Creation> = listOf()
     private var adapterTheme = ThemeAdapter()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProseBinding.bind(view)
@@ -41,6 +41,9 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
             intent.putExtra("Creation", it)
             view.context.startActivity(intent)
+        }
+        adapterTheme.setOnItemClickListener {
+            //searchTheme(it)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -57,6 +60,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     }
 
     override fun setCreation(creation: List<Creation>) {
+        list = creation
         adapter.models = creation
         setLoading(false)
     }
@@ -85,5 +89,17 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
             }
         }
         adapter.models = filteredList
+    }
+
+    fun searchTheme(theme: String){
+        var filterList: MutableList<Creation> = mutableListOf()
+        list.forEach {
+            it.theme.forEach { it1->
+                if(it1.toLowerCase().contains(theme.toLowerCase())){
+                    filterList.add(it)
+                }
+            }
+        }
+        adapter.models = filterList
     }
 }
