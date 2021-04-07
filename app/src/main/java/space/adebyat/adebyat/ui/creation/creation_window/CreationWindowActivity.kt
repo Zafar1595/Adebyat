@@ -15,33 +15,30 @@ import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
+import java.io.Serializable
 import java.lang.Runnable
 
-class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
-
+class CreationWindowActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityCreationWindowBinding
     private val mediaJob = Job()
     private val mediaScope = CoroutineScope(Dispatchers.Main + mediaJob)
     private lateinit var mp: MediaPlayer
     private var totalTime: Int = 0
-    private var url = ""//"https://firebasestorage.googleapis.com/v0/b/my-first-project-in-fire-e3bc0.appspot.com/o/allmusics%2F5sta%20Family%20-%20%D0%92%D0%BC%D0%B5%D1%81%D1%82%D0%B5%20%D0%9C%D1%8B.mp3?alt=media&token=a9a639c9-4930-47c6-baba-f7fd824a1c3d"
-    private var isPlay = false
-    private val presenter: CreationWindowPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreationWindowBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        var creationName = intent.getStringExtra("Creation")!!
-        presenter.init(this)
-        presenter.getCreation(creationName)
-
-
+        setLoading(true)
+        val creationName = intent.getStringExtra("creationName")!!
+        val creationContent = intent.getStringExtra("creationContent")!!
+        val creationUrl = intent.getStringExtra("creationUrl")!!
+        setData(creationName, creationContent, creationUrl)
     }
 
-    private fun mediaPlayerInitialization() = mediaScope.launch(Dispatchers.IO) {
+    private fun mediaPlayerInitialization(url: String) = mediaScope.launch(Dispatchers.IO) {
         mp = MediaPlayer().apply {
             setAudioAttributes(
                     AudioAttributes.Builder()
@@ -144,21 +141,21 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
         }
     }
 
-    override fun setData(creation: Creation) {
+    private fun setData(name: String, content: String, url: String) {
         setLoading(false)
-        binding.textViewCreationName.text = creation.name
-        binding.textViewCreationText.text = creation.content
-        url = creation.audioUrl
+        binding.textViewCreationName.text = name
+        binding.textViewCreationText.text = content
+
         if (url == ""){
             binding.exoContainer.visibility = View.GONE
         }else {
             binding.exoContainer.visibility = View.VISIBLE
-            mediaPlayerInitialization()
+            mediaPlayerInitialization(url)
             setLoadingPlaying(true)
         }
     }
 
-    override fun setLoading(loading: Boolean) {
+    fun setLoading(loading: Boolean) {
         if(loading) {
             binding.progressBarAuthor.visibility = View.VISIBLE
         }else{
@@ -166,8 +163,9 @@ class CreationWindowActivity : AppCompatActivity(), CreationWindowModelView {
         }
     }
 
-    override fun showMessage(msg: String?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    override fun onBackPressed() {
+        super.onBackPressed()
+        mediaScope.cancel()
     }
 
     override fun onDestroy() {

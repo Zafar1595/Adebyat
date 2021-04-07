@@ -38,7 +38,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         presenter.getThemes()
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
-            intent.putExtra("Creation", it)
+            intent.putExtra("Creation", it.name)
             view.context.startActivity(intent)
         }
 

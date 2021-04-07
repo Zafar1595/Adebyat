@@ -20,8 +20,8 @@ class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
         field = value
         notifyDataSetChanged()
     }
-    private var onItemClick:(departmentName: String)-> Unit = {}
-    fun setOnItemClickListener(onItemClick:(departmentName: String)-> Unit){
+    private var onItemClick:(departmentCreation: Creation)-> Unit = {}
+    fun setOnItemClickListener(onItemClick:(departmentCreation: Creation)-> Unit){
         this.onItemClick = onItemClick
     }
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -29,7 +29,7 @@ class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
             itemView.findViewById<TextView>(R.id.textViewCreationName).text = creation.name
             itemView.findViewById<TextView>(R.id.textViewCreationGenre).text = creation.genre
             itemView.setOnClickListener {
-                onItemClick.invoke(creation.name)
+                onItemClick.invoke(creation)
             }
 
         }
