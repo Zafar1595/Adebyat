@@ -39,11 +39,13 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         presenter.getThemes()
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
-            intent.putExtra("Creation", it.name)
+            intent.putExtra("creationName", it.name)
+            intent.putExtra("creationContent", it.content)
+            intent.putExtra("creationUrl", it.audioUrl)
             view.context.startActivity(intent)
         }
-        adapterTheme.setOnItemClickListener {
-            //searchTheme(it)
+        adapterTheme.setOnItemClickListener { theme ->
+            //searchTheme(theme)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -94,8 +96,8 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     fun searchTheme(theme: String){
         var filterList: MutableList<Creation> = mutableListOf()
         list.forEach {
-            it.theme.forEach { it1->
-                if(it1.toLowerCase().contains(theme.toLowerCase())){
+            it.theme.forEach { themeName->
+                if(themeName.toLowerCase().contains(theme.toLowerCase())){
                     filterList.add(it)
                 }
             }

@@ -38,10 +38,11 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         presenter.getThemes()
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
-            intent.putExtra("Creation", it.name)
+            intent.putExtra("creationName", it.name)
+            intent.putExtra("creationContent", it.content)
+            intent.putExtra("creationUrl", it.audioUrl)
             view.context.startActivity(intent)
         }
-
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {

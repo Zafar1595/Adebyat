@@ -43,7 +43,6 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
 
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
-            //intent.putExtra("Creation", it.name)
             intent.putExtra("creationName", it.name)
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)

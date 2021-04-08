@@ -52,25 +52,25 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     }
 
 
-    fun getCreation(onSuccess: (List<Creation>) -> Unit
-                    , onFailure: (msg: String?) -> Unit
-                    , str: String){
-        db.collection("creation")
-            .whereEqualTo("name", str)
-            .get()
-            .addOnSuccessListener {
-                val mList = mutableListOf<Creation>()
-                it.documents.forEach { document ->
-                    document.toObject(Creation::class.java)?.let { creation->
-                        mList.add(creation)
-                    }
-                }
-                onSuccess.invoke(mList)
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.localizedMessage)
-            }
-    }
+//    fun getCreation(onSuccess: (List<Creation>) -> Unit
+//                    , onFailure: (msg: String?) -> Unit
+//                    , str: String){
+//        db.collection("creation")
+//            .whereEqualTo("name", str)
+//            .get()
+//            .addOnSuccessListener {
+//                val mList = mutableListOf<Creation>()
+//                it.documents.forEach { document ->
+//                    document.toObject(Creation::class.java)?.let { creation->
+//                        mList.add(creation)
+//                    }
+//                }
+//                onSuccess.invoke(mList)
+//            }
+//            .addOnFailureListener {
+//                onFailure.invoke(it.localizedMessage)
+//            }
+//    }
 
     fun getThemes(onSuccess: (List<Theme>) -> Unit
                   , onFailure: (msg: String?) -> Unit){
