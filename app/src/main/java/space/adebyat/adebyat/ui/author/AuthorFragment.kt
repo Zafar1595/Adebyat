@@ -1,8 +1,6 @@
 package space.adebyat.adebyat.ui.author
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
@@ -14,7 +12,7 @@ import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.databinding.FragmentAuthorBinding
 
-class AuthorFragment: Fragment(R.layout.fragment_author), AuthorView {
+class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
 
     private var adapter = AuthorAdapter()
     private val presenter: AuthorPresenter by inject()
@@ -30,12 +28,12 @@ class AuthorFragment: Fragment(R.layout.fragment_author), AuthorView {
         presenter.getAllAuthors()
         navController = Navigation.findNavController(view)
 
-        adapter.setOnItemClickListener{
+        adapter.setOnItemClickListener {
             val action = AuthorFragmentDirections.actionNavigationAuthorToFragmentCreationList(it)
             navController.navigate(action)
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
@@ -47,14 +45,12 @@ class AuthorFragment: Fragment(R.layout.fragment_author), AuthorView {
                 return false
             }
         })
-
-
     }
 
     override fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBarAuthor.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBarAuthor.visibility = View.GONE
         }
     }
@@ -69,10 +65,10 @@ class AuthorFragment: Fragment(R.layout.fragment_author), AuthorView {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    fun search(authorName: String){
+    fun search(authorName: String) {
         var filteredList: MutableList<Author> = mutableListOf()
         list.forEach {
-            if(it.name.toLowerCase().contains(authorName.toLowerCase())){
+            if (it.name.toLowerCase().contains(authorName.toLowerCase())) {
                 filteredList.add(it)
             }
         }

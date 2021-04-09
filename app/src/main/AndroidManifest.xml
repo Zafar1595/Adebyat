@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Adebyat">
-        <activity android:name=".ui.creation.creation_window.CreationWindowActivity"></activity>
+        <activity android:name=".ui.creation.creation_window.CreationWindowActivity"
+            android:theme="@style/Theme.Adebyat"></activity>
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">

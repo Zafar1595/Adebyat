@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_filter"
+        android:icon="@drawable/ic_baseline_looks_4_24"
+        android:title="@string/filter"/>
+    <item
         android:id="@+id/navigation_author"
         android:icon="@drawable/ic_baseline_looks_one_24"
         android:title="@string/author"/>
@@ -13,10 +17,6 @@
         android:id="@+id/navigation_prose"
         android:icon="@drawable/ic_baseline_looks_3_24"
         android:title="@string/prose"/>
-    <item
-        android:id="@+id/navigation_filter"
-        android:icon="@drawable/ic_baseline_looks_4_24"
-        android:title="@string/filter"/>
     <item
         android:id="@+id/navigation_about"
         android:icon="@drawable/ic_baseline_looks_5_24"
