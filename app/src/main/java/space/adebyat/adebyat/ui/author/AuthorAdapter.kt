@@ -3,6 +3,7 @@ package space.adebyat.adebyat.ui.author
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import space.adebyat.adebyat.R
@@ -20,6 +21,10 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
         this.onItemClick = onItemClick
     }
 
+    private var onItemClickAuthorInfo:(author: Author)-> Unit = {}
+    fun setOnItemClickListenerAuthorInfo(onItemClickAuthorInfo:(author: Author)-> Unit){
+        this.onItemClickAuthorInfo = onItemClickAuthorInfo
+    }
 //    private var onItemClick:()-> Unit = {}
 //    fun setOnItemClickListener(function: () -> Unit) {
 //    }
@@ -30,6 +35,9 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
             //image set
             itemView.setOnClickListener {
                 onItemClick.invoke(author.name)
+            }
+            itemView.findViewById<ImageButton>(R.id.imageButtonAuthorInfo).setOnClickListener {
+                onItemClickAuthorInfo.invoke(author)
             }
         }
     }

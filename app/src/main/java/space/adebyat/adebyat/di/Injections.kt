@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import space.adebyat.adebyat.data.firebase.FirebaseManager
 import space.adebyat.adebyat.ui.author.AuthorPresenter
 import space.adebyat.adebyat.ui.creation.CreationPresenter
+import space.adebyat.adebyat.ui.filter.FilterPresenter
 
 val dataModule = module {
     single { FirebaseFirestore.getInstance() }
@@ -14,4 +15,6 @@ val dataModule = module {
 val presenterModule = module {
     single { AuthorPresenter(get()) }
     single { CreationPresenter(get()) }
+    single { FilterPresenter(get()) }
+
 }

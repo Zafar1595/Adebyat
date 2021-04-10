@@ -1,5 +1,6 @@
 package space.adebyat.adebyat.ui.author
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
@@ -31,6 +32,12 @@ class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
         adapter.setOnItemClickListener {
             val action = AuthorFragmentDirections.actionNavigationAuthorToFragmentCreationList(it)
             navController.navigate(action)
+        }
+        adapter.setOnItemClickListenerAuthorInfo {
+            val intent = Intent(view.context, AuthorInfoActivity::class.java)
+            intent.putExtra("bio", it.bio)
+            intent.putExtra("imageUrl", it.image_url)
+            startActivity(intent)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

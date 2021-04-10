@@ -10,16 +10,26 @@
         android:layout_height="match_parent"
         android:src="@drawable/ic_baseline_person_24"/>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/bg"
-        android:paddingStart="10dp">
-
+        android:paddingStart="10dp"
+        android:weightSum="5"
+        >
+        <LinearLayout
+            android:id="@+id/textViewContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonAuthorInfo">
         <TextView
             android:id="@+id/textViewPoetsName"
             android:layout_width="match_parent"
@@ -30,12 +40,22 @@
 
         <TextView
             android:id="@+id/textViewPoetsDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date"
             android:textColor="@color/white"
             />
-
-    </LinearLayout>
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/imageButtonAuthorInfo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_info_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewContainer"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,6 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                      , str: String) {
         var columnName = if(str == "Poeziya" || str == "Proza"){
             "direction"
-
         }else{
             "author"
         }
@@ -52,6 +51,24 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     }
 
 
+    fun getAllCreations(onSuccess: (List<Creation>) -> Unit
+                     , onFailure: (msg: String?) -> Unit) {
+
+        db.collection("creation")
+                .get()
+                .addOnSuccessListener {
+                    val mList = mutableListOf<Creation>()
+                    it.documents.forEach { document ->
+                        document.toObject(Creation::class.java)?.let { creation->
+                            mList.add(creation)
+                        }
+                    }
+                    onSuccess.invoke(mList)
+                }
+                .addOnFailureListener {
+                    onFailure.invoke(it.localizedMessage)
+                }
+    }
 //    fun getCreation(onSuccess: (List<Creation>) -> Unit
 //                    , onFailure: (msg: String?) -> Unit
 //                    , str: String){

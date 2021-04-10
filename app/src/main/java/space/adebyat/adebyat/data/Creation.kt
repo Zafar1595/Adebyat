@@ -9,5 +9,6 @@ class Creation(
         val direction: String = "",
         val genre: String = "",
         val theme: List<String> = listOf(),
-        val period: String = ""
+        val period: String = "",
+        val viewed: Int = 0
 )
