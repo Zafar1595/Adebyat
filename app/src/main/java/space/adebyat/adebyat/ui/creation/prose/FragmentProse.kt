@@ -2,8 +2,10 @@ package space.adebyat.adebyat.ui.creation.prose
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
@@ -44,8 +46,19 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
             intent.putExtra("creationUrl", it.audioUrl)
             view.context.startActivity(intent)
         }
-        adapterTheme.setOnItemClickListener { theme ->
-            //searchTheme(theme)
+
+        var themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener { it, view ->
+            if(!themeList.contains(it)) {
+                themeList.add(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_selected)
+                Log.d("themeEvent", "$it добавлено")
+            }else{
+                themeList.remove(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_not_selected)
+                Log.d("themeEvent", "$it удалено")
+            }
+            searchTheme(themeList)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -93,15 +106,15 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         adapter.models = filteredList
     }
 
-    fun searchTheme(theme: String){
-        var filterList: MutableList<Creation> = mutableListOf()
+    fun searchTheme(theme: List<String>){
+        var themeList: MutableList<Creation> = mutableListOf()
+        Log.d("themeEvent", "поиск")
+
         list.forEach {
-            it.theme.forEach { themeName->
-                if(themeName.toLowerCase().contains(theme.toLowerCase())){
-                    filterList.add(it)
-                }
+            if(it.theme.containsAll(theme)){
+                themeList.add(it)
             }
         }
-        adapter.models = filterList
+        adapter.models = themeList
     }
 }

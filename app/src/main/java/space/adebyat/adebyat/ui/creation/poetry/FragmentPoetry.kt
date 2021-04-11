@@ -2,8 +2,10 @@ package space.adebyat.adebyat.ui.creation.poetry
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -42,6 +44,19 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)
             view.context.startActivity(intent)
+        }
+        var themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener {it, view ->
+            if(!themeList.contains(it)) {
+                themeList.add(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_selected)
+                Log.d("themeEvent", "$it добавлено")
+            }else{
+                themeList.remove(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_not_selected)
+                Log.d("themeEvent", "$it удалено")
+            }
+            searchTheme(themeList)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -87,5 +102,17 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
             }
         }
         adapter.models = filteredList
+    }
+
+    fun searchTheme(theme: List<String>){
+        var themeList: MutableList<Creation> = mutableListOf()
+        Log.d("themeEvent", "поиск")
+
+        list.forEach {
+            if(it.theme.containsAll(theme)){
+                themeList.add(it)
+            }
+        }
+        adapter.models = themeList
     }
 }

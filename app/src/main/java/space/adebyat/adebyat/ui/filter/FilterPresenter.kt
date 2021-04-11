@@ -1,7 +1,6 @@
 package space.adebyat.adebyat.ui.filter
 
 import space.adebyat.adebyat.data.firebase.FirebaseManager
-import space.adebyat.adebyat.ui.author.AuthorView
 
 class FilterPresenter(private val firebase: FirebaseManager) {
     lateinit var view: FilterView
@@ -20,5 +19,48 @@ class FilterPresenter(private val firebase: FirebaseManager) {
                     view.showMessage(it)
                 }
         )
+    }
+    fun getData(){
+        firebase.getThemes(
+                {
+                    view.setThemes(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+        firebase.getAuthors(
+                {
+                    view.setAuthors(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+        firebase.getDirections(
+                {
+                    view.setDirections(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+        firebase.getGenre(
+                {
+                    view.setGenre(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+        firebase.getPeriod(
+                {
+                    view.setPeriod(it)
+                },
+                {
+                    view.showMessage(it)
+                }
+        )
+
     }
 }

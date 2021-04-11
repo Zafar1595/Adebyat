@@ -3,6 +3,7 @@ package space.adebyat.adebyat.ui.creation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
         fun populateModel(creation: Creation){
             itemView.findViewById<TextView>(R.id.textViewCreationName).text = creation.name
             itemView.findViewById<TextView>(R.id.textViewCreationGenre).text = creation.genre
+            Log.d("themeEvent", "выведено")
             itemView.setOnClickListener {
                 onItemClick.invoke(creation)
             }
