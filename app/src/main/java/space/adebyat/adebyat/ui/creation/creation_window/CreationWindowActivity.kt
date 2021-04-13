@@ -165,6 +165,7 @@ class CreationWindowActivity : AppCompatActivity(){
 
     override fun onBackPressed() {
         super.onBackPressed()
+        mp.stop()
         mediaScope.cancel()
     }
 

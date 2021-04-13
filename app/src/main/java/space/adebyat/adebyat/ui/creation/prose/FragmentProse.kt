@@ -1,12 +1,14 @@
 package space.adebyat.adebyat.ui.creation.prose
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +32,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     private var list: List<Creation> = listOf()
     private var adapterTheme = ThemeAdapter()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProseBinding.bind(view)
@@ -51,11 +54,11 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         adapterTheme.setOnItemClickListener { it, view ->
             if(!themeList.contains(it)) {
                 themeList.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_selected)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
                 Log.d("themeEvent", "$it добавлено")
             }else{
                 themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_not_selected)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
                 Log.d("themeEvent", "$it удалено")
             }
             searchTheme(themeList)

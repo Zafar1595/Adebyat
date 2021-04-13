@@ -1,12 +1,15 @@
 package space.adebyat.adebyat.ui.creation.poetry
 
 import android.content.Intent
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.android.ext.android.inject
@@ -27,6 +30,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
     private val presenter: CreationPresenter by inject()
     private var list: List<Creation> = listOf()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPoetryBinding.bind(view)
@@ -49,11 +53,11 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         adapterTheme.setOnItemClickListener {it, view ->
             if(!themeList.contains(it)) {
                 themeList.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_selected)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
                 Log.d("themeEvent", "$it добавлено")
             }else{
                 themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setBackgroundResource(R.drawable.b_ground_not_selected)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
                 Log.d("themeEvent", "$it удалено")
             }
             searchTheme(themeList)

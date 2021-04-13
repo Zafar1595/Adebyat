@@ -54,7 +54,6 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         })
         binding.autoCompleteAuthors.setOnItemClickListener { adapterView, view, i, l ->
             //
-
         }
         binding.autoCompleteDirections.setOnItemClickListener { adapterView, view, i, l ->
             //
@@ -107,16 +106,12 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     override fun setGenre(genres: List<Genre>) {
-        if(genres != null){
-            var mList = mutableListOf<String>()
-            genres.forEach {
-                mList.add(it.name)
-            }
-            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mList)
-            binding.autoCompleteGenre.setAdapter(spinnerAdapter)
-        }else{
-            Toast.makeText(requireContext(), "Данные не получены!", Toast.LENGTH_SHORT).show()
+        val mList = mutableListOf<String>()
+        genres.forEach {
+            mList.add(it.name)
         }
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mList)
+        binding.autoCompleteGenre.setAdapter(spinnerAdapter)
     }
 
     override fun setPeriod(periods: List<space.adebyat.adebyat.data.Period>) {

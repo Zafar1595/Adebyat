@@ -17,8 +17,8 @@
         app:layout_constraintEnd_toStartOf="@id/imageButtonFilter"/>
     <ImageButton
         android:id="@+id/imageButtonFilter"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/search_view"
