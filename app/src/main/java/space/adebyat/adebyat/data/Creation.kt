@@ -1,14 +1,14 @@
 package space.adebyat.adebyat.data
 
 class Creation(
-        val id: String = "",
-        val name: String = "",
-        val content: String = "",
-        val audioUrl: String = "",
-        val author: String = "",
-        val direction: String = "",
-        val genre: String = "",
-        val theme: List<String> = listOf(),
-        val period: String = "",
-        val viewed: Int = 0
+        var id: String = "",
+        var name: String = "",
+        var content: String = "",
+        var audioUrl: String = "",
+        var author: String = "",
+        var direction: String = "",
+        var genre: String = "",
+        var theme: MutableList<String> = mutableListOf(),
+        var period: String = "",
+        var viewed: Int = 0
 )

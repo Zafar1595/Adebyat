@@ -1,11 +1,15 @@
 package space.adebyat.adebyat.ui.creation
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +30,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
     private var adapterTheme = ThemeAdapter()
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCreationListBinding.bind(view)
@@ -60,6 +65,21 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
                 return false
             }
         })
+
+        var themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener {it, view ->
+            if(!themeList.contains(it)) {
+                themeList.add(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
+                Log.d("themeEvent", "$it добавлено")
+            }else{
+                themeList.remove(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
+                Log.d("themeEvent", "$it удалено")
+            }
+            searchTheme(themeList)
+        }
+
     }
 
     override fun setCreation(creation: List<Creation>) {
@@ -93,5 +113,15 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         }
         adapter.models = filteredList
     }
+    fun searchTheme(theme: List<String>){
+        var themeList: MutableList<Creation> = mutableListOf()
+        Log.d("themeEvent", "поиск")
 
+        list.forEach {
+            if(it.theme.containsAll(theme)){
+                themeList.add(it)
+            }
+        }
+        adapter.models = themeList
+    }
 }

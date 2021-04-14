@@ -1,14 +1,17 @@
 package space.adebyat.adebyat.ui.filter
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.*
@@ -22,6 +25,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     lateinit var binding: FragmentFilterBinding
     private val presenter: FilterPresenter by inject()
     private var list: List<Creation> = listOf()
+    private var tempsObject: Creation = Creation()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,27 +51,48 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
             }
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
-                    search(p0)
+                    filterByName(p0)
                 }
                 return false
             }
         })
-        binding.autoCompleteAuthors.setOnItemClickListener { adapterView, view, i, l ->
-            //
+
+        binding.autoCompleteAuthors.setOnItemClickListener { adapterView, _, i, _ ->
+            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+                tempsObject.author = adapterView.getItemAtPosition(i).toString()
+            }else{
+                tempsObject.author = ""
+            }
+            filterByCriteria()
         }
-        binding.autoCompleteDirections.setOnItemClickListener { adapterView, view, i, l ->
-            //
+
+        binding.autoCompleteDirections.setOnItemClickListener { adapterView, _, i, _ ->
+            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+                tempsObject.direction = adapterView.getItemAtPosition(i).toString()
+            }else{
+                tempsObject.direction = ""
+            }
+            filterByCriteria()
         }
-        binding.autoCompleteGenre.setOnItemClickListener { adapterView, view, i, l ->
-            //
+        binding.autoCompleteGenre.setOnItemClickListener { adapterView, _, i, _ ->
+            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+                tempsObject.genre = adapterView.getItemAtPosition(i).toString()
+            }else{
+                tempsObject.genre = ""
+            }
+            filterByCriteria()
         }
-        binding.autoCompletePeriod.setOnItemClickListener { adapterView, view, i, l ->
-            //
-        }
-        binding.autoCompleteTheme.setOnItemClickListener { adapterView, view, i, l ->
-            //
+        binding.autoCompletePeriod.setOnItemClickListener { adapterView, _, i, _ ->
+            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+                tempsObject.period = adapterView.getItemAtPosition(i).toString()
+            }else{
+                tempsObject.period = ""
+            }
+            filterByCriteria()
         }
     }
+
+
 
     override fun setCreations(creation: List<Creation>) {
         adapter.models = selectionSort(creation)
@@ -92,12 +117,12 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         themes.forEach {
             mList.add(it.name)
         }
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mList)
-        binding.autoCompleteTheme.setAdapter(spinnerAdapter)
+
     }
 
     override fun setDirections(directions: List<Direction>) {
         var mList = mutableListOf<String>()
+        mList.add("Not selected...")
         directions.forEach {
             mList.add(it.name)
         }
@@ -107,6 +132,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setGenre(genres: List<Genre>) {
         val mList = mutableListOf<String>()
+        mList.add("Not selected...")
         genres.forEach {
             mList.add(it.name)
         }
@@ -116,6 +142,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setPeriod(periods: List<space.adebyat.adebyat.data.Period>) {
         var mList = mutableListOf<String>()
+        mList.add("Not selected...")
         periods.forEach {
             mList.add(it.name)
         }
@@ -125,6 +152,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setAuthors(authors: List<Author>) {
         var mList = mutableListOf<String>()
+        mList.add("Not selected...")
         authors.forEach {
             mList.add(it.name)
         }
@@ -164,7 +192,19 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         }
     }
 
-    fun search(creationName: String){
+    fun filterByCriteria(){
+        var filterByCriteriaList: MutableList<Creation> = mutableListOf()
+        filterByCriteriaList = list.toMutableList()
+
+        if(tempsObject.author != "") { filterByCriteriaList.removeIf { it.author != tempsObject.author } }
+        if(tempsObject.direction != "") { filterByCriteriaList.removeIf { it.direction != tempsObject.direction }}
+        if(tempsObject.genre != "") { filterByCriteriaList.removeIf { it.genre != tempsObject.genre }}
+        if(tempsObject.period != "") {filterByCriteriaList.removeIf { it.period != tempsObject.period }}
+
+        adapter.models = filterByCriteriaList
+    }
+
+    fun filterByName(creationName: String){
         var filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
             if(it.name.toLowerCase().contains(creationName.toLowerCase())){

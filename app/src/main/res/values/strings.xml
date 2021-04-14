@@ -120,4 +120,9 @@
 Не отдали б Москвы!\n
     </string>
     <string name="search">Search</string>
+    <string name="authors">Authors</string>
+    <string name="directions">Directions</string>
+    <string name="genre">Genre</string>
+    <string name="period">Period</string>
+    <string name="theme">Theme</string>
 </resources>

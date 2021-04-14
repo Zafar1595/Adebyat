@@ -61,7 +61,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
 
     fun getGenre(onSuccess: (List<Genre>) -> Unit,
                  onFailure: (msg: String?) -> Unit){
-        db.collection("genre").get()
+        db.collection("Genre").get()
                 .addOnSuccessListener {
                     val mList: MutableList<Genre> = mutableListOf()
                     it.documents.forEach { document ->

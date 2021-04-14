@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Author
 
@@ -32,6 +34,10 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
         fun populateModel(author: Author){
             itemView.findViewById<TextView>(R.id.textViewPoetsName).text = author.name
             itemView.findViewById<TextView>(R.id.textViewPoetsDate).text = author.date
+            if(author.image_url != ""){
+                var imageView: ImageView = itemView.findViewById(R.id.imageViewPoets)
+                Glide.with(itemView).load(author.image_url).into(imageView)
+            }
             //image set
             itemView.setOnClickListener {
                 onItemClick.invoke(author.name)

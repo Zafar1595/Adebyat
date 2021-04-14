@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/search_view"
-        android:background="@drawable/ic_baseline_filter_list_24"
+        android:background="@drawable/ic_baseline_filter_alt_24"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,13 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/search_view"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/containerAuthor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Authors"
+            android:hint="@string/authors"
             android:paddingTop="10dp"
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
@@ -45,17 +46,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/containerDirection"
             >
+
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteAuthors"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="Not selected..."
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/containerDirection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Directions"
+            android:hint="@string/directions"
             android:paddingStart="5dp"
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
@@ -68,14 +73,18 @@
                 android:id="@+id/autoCompleteDirections"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"/>
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="Not selected..."
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/containerGenre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Genre"
+            android:hint="@string/genre"
             android:paddingTop="5dp"
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
@@ -87,14 +96,19 @@
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteGenre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="Not selected..."
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/containerPeriod"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Period"
+            android:hint="@string/period"
             android:paddingTop="5dp"
             android:paddingStart="5dp"
             android:paddingEnd="10dp"
@@ -106,26 +120,15 @@
             <AutoCompleteTextView
                 android:id="@+id/autoCompletePeriod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="Not selected..."
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/containerTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Theme"
-            android:paddingTop="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="5dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            app:layout_constraintTop_toBottomOf="@id/containerGenre"
-            app:layout_constraintStart_toStartOf="parent"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar

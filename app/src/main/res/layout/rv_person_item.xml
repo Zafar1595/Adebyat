@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    android:layout_margin="10dp"
+
+    android:background="@drawable/layout_bg"
+
+    >
     <ImageView
         android:id="@+id/imageViewPoets"
         android:layout_width="match_parent"
@@ -17,9 +21,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/bg"
+        android:background="@drawable/layout_bg1"
         android:paddingStart="10dp"
         android:weightSum="5"
+
         >
         <LinearLayout
             android:id="@+id/textViewContainer"

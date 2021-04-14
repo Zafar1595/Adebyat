@@ -18,7 +18,7 @@ import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
 import java.io.Serializable
 import java.lang.Runnable
 
-class CreationWindowActivity : AppCompatActivity(){
+class CreationWindowActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityCreationWindowBinding
     private val mediaJob = Job()
@@ -36,6 +36,8 @@ class CreationWindowActivity : AppCompatActivity(){
         val creationContent = intent.getStringExtra("creationContent")!!
         val creationUrl = intent.getStringExtra("creationUrl")!!
         setData(creationName, creationContent, creationUrl)
+
+
     }
 
     private fun mediaPlayerInitialization(url: String) = mediaScope.launch(Dispatchers.IO) {
@@ -59,21 +61,23 @@ class CreationWindowActivity : AppCompatActivity(){
         }
     }
 
-    private fun progressBarSetPosition(){
+    private fun progressBarSetPosition() {
         // Position Bar
         binding.positionBar.max = totalTime
         binding.positionBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        mp.seekTo(progress)
+                object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                        if (fromUser) {
+                            mp.seekTo(progress)
+                        }
+                    }
+
+                    override fun onStartTrackingTouch(p0: SeekBar?) {
+                    }
+
+                    override fun onStopTrackingTouch(p0: SeekBar?) {
                     }
                 }
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
         )
         // Thread
         Thread(Runnable {
@@ -131,11 +135,11 @@ class CreationWindowActivity : AppCompatActivity(){
         }
     }
 
-    private fun setLoadingPlaying(loading: Boolean){
-        if(loading){
+    private fun setLoadingPlaying(loading: Boolean) {
+        if (loading) {
             binding.progressBarPlaying.visibility = View.VISIBLE
             binding.playBtn.visibility = View.GONE
-        }else{
+        } else {
             binding.progressBarPlaying.visibility = View.GONE
             binding.playBtn.visibility = View.VISIBLE
         }
@@ -146,9 +150,9 @@ class CreationWindowActivity : AppCompatActivity(){
         binding.textViewCreationName.text = name
         binding.textViewCreationText.text = content
 
-        if (url == ""){
+        if (url == "") {
             binding.exoContainer.visibility = View.GONE
-        }else {
+        } else {
             binding.exoContainer.visibility = View.VISIBLE
             mediaPlayerInitialization(url)
             setLoadingPlaying(true)
@@ -156,16 +160,20 @@ class CreationWindowActivity : AppCompatActivity(){
     }
 
     fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBarAuthor.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBarAuthor.visibility = View.GONE
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        mp.stop()
+        if(binding.exoContainer.visibility == 0 && binding.playBtn.visibility == 0) {
+            if (mp.isPlaying) {
+                mp.stop()
+            }
+        }
         mediaScope.cancel()
     }
 
