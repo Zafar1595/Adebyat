@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/search_view"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <com.google.android.material.textfield.TextInputLayout
@@ -127,6 +127,7 @@
 
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

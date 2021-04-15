@@ -1,5 +1,6 @@
 package space.adebyat.adebyat.ui.creation
 
+import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.data.firebase.FirebaseManager
 
 class CreationPresenter(private val firebase: FirebaseManager) {
@@ -31,4 +32,11 @@ class CreationPresenter(private val firebase: FirebaseManager) {
                 }
         )
     }
+
+    fun viewedIncrement(creation: Creation){
+        creation.viewed++
+        firebase.viewedIncrement(creation)
+        //fireBase
+    }
+
 }

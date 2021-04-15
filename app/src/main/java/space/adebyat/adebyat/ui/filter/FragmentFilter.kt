@@ -40,6 +40,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
             intent.putExtra("creationName", it.name)
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)
+            presenter.viewedIncrement(it)
             view.context.startActivity(intent)
         }
         binding.imageButtonFilter.setOnClickListener {

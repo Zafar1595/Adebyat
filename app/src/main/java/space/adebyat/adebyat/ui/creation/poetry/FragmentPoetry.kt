@@ -1,7 +1,6 @@
 package space.adebyat.adebyat.ui.creation.poetry
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -47,6 +46,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
             intent.putExtra("creationName", it.name)
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)
+            presenter.viewedIncrement(it)
             view.context.startActivity(intent)
         }
         var themeList: MutableList<String> = mutableListOf()

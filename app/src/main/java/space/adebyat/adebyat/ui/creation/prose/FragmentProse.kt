@@ -9,11 +9,8 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
@@ -47,6 +44,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
             intent.putExtra("creationName", it.name)
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)
+            presenter.viewedIncrement(it)
             view.context.startActivity(intent)
         }
 

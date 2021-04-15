@@ -3,6 +3,7 @@ package space.adebyat.adebyat.data.firebase
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import space.adebyat.adebyat.data.*
+import java.util.*
 
 class FirebaseManager(private val db: FirebaseFirestore) {
 
@@ -23,6 +24,8 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 }
     }
 
+
+
     fun getAllCreations(onSuccess: (List<Creation>) -> Unit
                         , onFailure: (msg: String?) -> Unit) {
 
@@ -31,6 +34,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 .addOnSuccessListener {
                     val mList = mutableListOf<Creation>()
                     it.documents.forEach { document ->
+                        Log.d("docId", document.id.toString())
                         document.toObject(Creation::class.java)?.let { creation->
                             mList.add(creation)
                         }
@@ -126,6 +130,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 val mList = mutableListOf<Creation>()
                 it.documents.forEach { document ->
                     document.toObject(Creation::class.java)?.let { creation->
+                        if (document.exists())
                         mList.add(creation)
                     }
                 }
@@ -135,4 +140,21 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 onFailure.invoke(it.localizedMessage)
             }
     }
+
+    fun viewedIncrement(creation: Creation){
+        db.collection("creation")
+                .whereEqualTo("author", creation.author)
+                .get()
+                .addOnSuccessListener {
+                    if(it.size() > 0){
+                        if(it.documents[0].exists()){
+                            db.collection("creation").document(it.documents[0].id)
+                                    .update("viewed", creation.viewed)
+                        }
+                    }
+                }
+                .addOnFailureListener {
+                }
+    }
+
 }

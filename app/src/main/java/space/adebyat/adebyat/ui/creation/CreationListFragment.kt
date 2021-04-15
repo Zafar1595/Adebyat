@@ -5,17 +5,14 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
-import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.data.Theme
 import space.adebyat.adebyat.databinding.FragmentCreationListBinding
@@ -51,6 +48,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
             intent.putExtra("creationName", it.name)
             intent.putExtra("creationContent", it.content)
             intent.putExtra("creationUrl", it.audioUrl)
+            presenter.viewedIncrement(it)
             view.context.startActivity(intent)
         }
 
