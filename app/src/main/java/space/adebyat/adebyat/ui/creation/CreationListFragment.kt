@@ -18,7 +18,7 @@ import space.adebyat.adebyat.data.Theme
 import space.adebyat.adebyat.databinding.FragmentCreationListBinding
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 
-class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationView{
+class CreationListFragment : Fragment(R.layout.fragment_creation_list), CreationView {
 
     private var adapter = CreationAdapter()
     private val presenter: CreationPresenter by inject()
@@ -35,9 +35,7 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         binding.recyclerViewCreationList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.recyclerViewThemes.adapter = adapterTheme
 
-
         var str: String = arguments?.get("name") as String
-        Toast.makeText(view.context, str, Toast.LENGTH_LONG).show()
 
         presenter.init(this)
         presenter.getCreation(str)
@@ -52,10 +50,11 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
             view.context.startActivity(intent)
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
                     search(p0)
@@ -65,12 +64,12 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         })
 
         var themeList: MutableList<String> = mutableListOf()
-        adapterTheme.setOnItemClickListener {it, view ->
-            if(!themeList.contains(it)) {
+        adapterTheme.setOnItemClickListener { it, view ->
+            if (!themeList.contains(it)) {
                 themeList.add(it)
                 view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
                 Log.d("themeEvent", "$it добавлено")
-            }else{
+            } else {
                 themeList.remove(it)
                 view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
                 Log.d("themeEvent", "$it удалено")
@@ -91,9 +90,9 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
     }
 
     override fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBarCreationList.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBarCreationList.visibility = View.GONE
         }
     }
@@ -102,21 +101,22 @@ class CreationListFragment: Fragment(R.layout.fragment_creation_list), CreationV
         adapterTheme.models = themes
     }
 
-    fun search(creationName: String){
+    fun search(creationName: String) {
         var filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
-            if(it.name.toLowerCase().contains(creationName.toLowerCase())){
+            if (it.name.toLowerCase().contains(creationName.toLowerCase())) {
                 filteredList.add(it)
             }
         }
         adapter.models = filteredList
     }
-    fun searchTheme(theme: List<String>){
+
+    fun searchTheme(theme: List<String>) {
         var themeList: MutableList<Creation> = mutableListOf()
         Log.d("themeEvent", "поиск")
 
         list.forEach {
-            if(it.theme.containsAll(theme)){
+            if (it.theme.containsAll(theme)) {
                 themeList.add(it)
             }
         }

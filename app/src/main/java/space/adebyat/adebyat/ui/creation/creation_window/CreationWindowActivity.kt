@@ -1,11 +1,15 @@
 package space.adebyat.adebyat.ui.creation.creation_window
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
@@ -35,9 +39,17 @@ class CreationWindowActivity : AppCompatActivity() {
         val creationName = intent.getStringExtra("creationName")!!
         val creationContent = intent.getStringExtra("creationContent")!!
         val creationUrl = intent.getStringExtra("creationUrl")!!
-        setData(creationName, creationContent, creationUrl)
 
-
+        //Проверка интернет соеденения
+        val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        if(isConnected){
+            setData(creationName, creationContent, creationUrl, true)
+        }else{
+            setData(creationName, creationContent, creationUrl, false)
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun mediaPlayerInitialization(url: String) = mediaScope.launch(Dispatchers.IO) {
@@ -145,17 +157,17 @@ class CreationWindowActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(name: String, content: String, url: String) {
+    private fun setData(name: String, content: String, url: String, isConnected: Boolean) {
         setLoading(false)
         binding.textViewCreationName.text = name
         binding.textViewCreationText.text = content
 
-        if (url == "") {
-            binding.exoContainer.visibility = View.GONE
-        } else {
+        if (url != "" && isConnected) {
             binding.exoContainer.visibility = View.VISIBLE
             mediaPlayerInitialization(url)
             setLoadingPlaying(true)
+        } else {
+            binding.exoContainer.visibility = View.GONE
         }
     }
 
@@ -172,6 +184,7 @@ class CreationWindowActivity : AppCompatActivity() {
         if(binding.exoContainer.visibility == 0 && binding.playBtn.visibility == 0) {
             if (mp.isPlaying) {
                 mp.stop()
+                mp.release()
             }
         }
         mediaScope.cancel()

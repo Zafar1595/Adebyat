@@ -44,4 +44,9 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="space.adebyat.adebyat.SplashScreen"
+        android:label="SplashScreen"
+        tools:layout="@layout/splash_screen"/>
 </navigation>

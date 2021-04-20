@@ -3,11 +3,9 @@ package space.adebyat.adebyat.ui.filter
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,6 +15,7 @@ import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.*
 import space.adebyat.adebyat.databinding.FragmentFilterBinding
 import space.adebyat.adebyat.ui.creation.CreationAdapter
+import space.adebyat.adebyat.ui.creation.ThemeAdapter
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 
 class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
@@ -26,15 +25,34 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     private val presenter: FilterPresenter by inject()
     private var list: List<Creation> = listOf()
     private var tempsObject: Creation = Creation()
+    var themeList: MutableList<String> = mutableListOf()
+    var adapterTheme = ThemeAdapter()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFilterBinding.bind(view)
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        //binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerViewThemes.adapter = adapterTheme
         presenter.init(this)
         presenter.getAllCreations()
         presenter.getData()
+        adapterTheme.setOnItemClickListener { it, view ->
+            if(!themeList.contains(it)) {
+                themeList.add(it)
+                tempsObject.theme.add(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
+                Log.d("themeEvent", "$it добавлено")
+            }else{
+                themeList.remove(it)
+                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
+                Log.d("themeEvent", "$it удалено")
+            }
+            filterByCriteria()
+            //
+        }
+
         adapter.setOnItemClickListener {
             val intent = Intent(view.context, CreationWindowActivity::class.java)
             intent.putExtra("creationName", it.name)
@@ -114,11 +132,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     override fun setThemes(themes: List<Theme>) {
-        var mList = mutableListOf<String>()
-        themes.forEach {
-            mList.add(it.name)
-        }
-
+        adapterTheme.models = themes
     }
 
     override fun setDirections(directions: List<Direction>) {
@@ -201,7 +215,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         if(tempsObject.direction != "") { filterByCriteriaList.removeIf { it.direction != tempsObject.direction }}
         if(tempsObject.genre != "") { filterByCriteriaList.removeIf { it.genre != tempsObject.genre }}
         if(tempsObject.period != "") {filterByCriteriaList.removeIf { it.period != tempsObject.period }}
-
+        if(themeList != null) {filterByCriteriaList.removeIf { !it.theme.containsAll(themeList)}}
         adapter.models = filterByCriteriaList
     }
 

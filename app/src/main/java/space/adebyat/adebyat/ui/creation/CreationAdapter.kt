@@ -29,6 +29,7 @@ class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
         fun populateModel(creation: Creation){
             itemView.findViewById<TextView>(R.id.textViewCreationName).text = creation.name
             itemView.findViewById<TextView>(R.id.textViewCreationGenre).text = creation.genre
+            itemView.findViewById<TextView>(R.id.textViewCreationAuthorName).text = creation.author
             Log.d("themeEvent", "выведено")
             itemView.setOnClickListener {
                 onItemClick.invoke(creation)
