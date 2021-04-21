@@ -23,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/bg_item_creation">
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp">
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
@@ -33,10 +35,6 @@
         android:queryHint="@string/search"
         android:iconifiedByDefault="false"
         android:background="@drawable/b_ground_selected"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
         android:paddingEnd="20dp"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>

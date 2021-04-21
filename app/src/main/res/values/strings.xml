@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Adebyat</string>
 
-    <string name="filter">Filer</string>
+    <string name="filter">Bas bet</string>
     <string name="about">About</string>
-    <string name="author">Author</string>
-    <string name="poetry">Poetry</string>
-    <string name="prose">Prose</string>
+    <string name="author">Avtor</string>
+    <string name="poetry">Poeziya</string>
+    <string name="prose">Proza</string>
+    <string name="search">Qidiriw</string>
+    <string name="authors">Avtorlar</string>
+    <string name="directions">Jonelis</string>
+    <string name="genre">Janr</string>
+    <string name="period">Period</string>
+    <string name="theme">Theme</string>
     <string name="text">
 — Скажи-ка, дядя, ведь не даром\n
 Москва, спаленная пожаром,\n
@@ -119,10 +125,5 @@
 Когда б на то не божья воля,\n
 Не отдали б Москвы!\n
     </string>
-    <string name="search">Search</string>
-    <string name="authors">Authors</string>
-    <string name="directions">Directions</string>
-    <string name="genre">Genre</string>
-    <string name="period">Period</string>
-    <string name="theme">Theme</string>
+
 </resources>

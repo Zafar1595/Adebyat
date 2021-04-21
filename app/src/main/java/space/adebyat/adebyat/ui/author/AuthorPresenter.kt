@@ -1,5 +1,6 @@
 package space.adebyat.adebyat.ui.author
 
+import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.data.firebase.FirebaseManager
 
 class AuthorPresenter(private val firebase: FirebaseManager) {
@@ -13,7 +14,14 @@ class AuthorPresenter(private val firebase: FirebaseManager) {
         view.setLoading(true)
         firebase.getAuthors(
             {
-                view.setData(it)
+                var mList: MutableList<Author> = mutableListOf()
+                it.forEach {
+                    if(it.name != null){
+                        mList.add(it)
+
+                    }
+                }
+                view.setData(mList)
             },
             {
                 view.showMessage(it)

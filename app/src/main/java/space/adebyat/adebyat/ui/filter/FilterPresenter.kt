@@ -1,5 +1,6 @@
 package space.adebyat.adebyat.ui.filter
 
+import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.data.firebase.FirebaseManager
 
@@ -32,7 +33,13 @@ class FilterPresenter(private val firebase: FirebaseManager) {
         )
         firebase.getAuthors(
                 {
-                    view.setAuthors(it)
+                    var mList: MutableList<Author> = mutableListOf()
+                    it.forEach {
+                        if(it.name != null){
+                            mList.add(it)
+                        }
+                    }
+                    view.setAuthors(mList)
                 },
                 {
                     view.showMessage(it)
