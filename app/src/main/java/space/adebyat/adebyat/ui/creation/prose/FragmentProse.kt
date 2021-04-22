@@ -48,16 +48,12 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
             view.context.startActivity(intent)
         }
 
-        var themeList: MutableList<String> = mutableListOf()
-        adapterTheme.setOnItemClickListener { it, view ->
+        val themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener {
             if(!themeList.contains(it)) {
                 themeList.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
-                Log.d("themeEvent", "$it добавлено")
             }else{
                 themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
-                Log.d("themeEvent", "$it удалено")
             }
             searchTheme(themeList)
         }

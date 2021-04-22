@@ -49,16 +49,12 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
             presenter.viewedIncrement(it)
             view.context.startActivity(intent)
         }
-        var themeList: MutableList<String> = mutableListOf()
-        adapterTheme.setOnItemClickListener {it, view ->
+        val themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener {it ->
             if(!themeList.contains(it)) {
                 themeList.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
-                Log.d("themeEvent", "$it добавлено")
             }else{
                 themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
-                Log.d("themeEvent", "$it удалено")
             }
             searchTheme(themeList)
         }

@@ -1,15 +1,14 @@
 package space.adebyat.adebyat.ui.creation
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
@@ -25,20 +24,24 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
     lateinit var binding: FragmentCreationListBinding
     private var list: List<Creation> = listOf()
     private var adapterTheme = ThemeAdapter()
+    private val args: CreationListFragmentArgs by navArgs()
 
-
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCreationListBinding.bind(view)
         binding.recyclerViewCreationList.adapter = adapter
-        binding.recyclerViewCreationList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerViewCreationList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         binding.recyclerViewThemes.adapter = adapterTheme
 
-        var str: String = arguments?.get("name") as String
+        val name = args.name
 
         presenter.init(this)
-        presenter.getCreation(str)
+        presenter.getCreation(name)
         presenter.getThemes()
 
         adapter.setOnItemClickListener {
@@ -55,24 +58,20 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
                 return false
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0 != null) {
-                    search(p0)
+            override fun onQueryTextChange(text: String?): Boolean {
+                if (!text.isNullOrEmpty()) {
+                    search(text)
                 }
                 return false
             }
         })
 
-        var themeList: MutableList<String> = mutableListOf()
-        adapterTheme.setOnItemClickListener { it, view ->
-            if (!themeList.contains(it)) {
-                themeList.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
-                Log.d("themeEvent", "$it добавлено")
+        val themeList: MutableList<String> = mutableListOf()
+        adapterTheme.setOnItemClickListener { theme ->
+            if (!themeList.contains(theme)) {
+                themeList.add(theme)
             } else {
-                themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
-                Log.d("themeEvent", "$it удалено")
+                themeList.remove(theme)
             }
             searchTheme(themeList)
         }

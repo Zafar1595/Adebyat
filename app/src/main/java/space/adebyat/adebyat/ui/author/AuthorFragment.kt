@@ -12,6 +12,7 @@ import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Author
 import space.adebyat.adebyat.databinding.FragmentAuthorBinding
+import java.util.*
 
 class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
 
@@ -34,7 +35,7 @@ class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
             navController.navigate(action)
         }
         adapter.setOnItemClickListenerAuthorInfo {
-            val intent = Intent(view.context, AuthorInfoActivity::class.java)
+            val intent = Intent(requireContext(), AuthorInfoActivity::class.java)
             intent.putExtra("bio", it.bio)
             intent.putExtra("imageUrl", it.image_url)
             startActivity(intent)
@@ -45,9 +46,9 @@ class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
                 return false
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0 != null) {
-                    search(p0)
+            override fun onQueryTextChange(text: String?): Boolean {
+                if (!text.isNullOrEmpty()) {
+                    search(text)
                 }
                 return false
             }
@@ -72,10 +73,10 @@ class AuthorFragment : Fragment(R.layout.fragment_author), AuthorView {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    fun search(authorName: String) {
-        var filteredList: MutableList<Author> = mutableListOf()
+    private fun search(authorName: String) {
+        val filteredList: MutableList<Author> = mutableListOf()
         list.forEach {
-            if (it.name.toLowerCase().contains(authorName.toLowerCase())) {
+            if (it.name.toLowerCase(Locale.ROOT).contains(authorName.toLowerCase(Locale.ROOT))) {
                 filteredList.add(it)
             }
         }

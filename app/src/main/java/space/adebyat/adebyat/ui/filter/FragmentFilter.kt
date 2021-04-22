@@ -38,16 +38,12 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         presenter.init(this)
         presenter.getAllCreations()
         presenter.getData()
-        adapterTheme.setOnItemClickListener { it, view ->
+        adapterTheme.setOnItemClickListener {
             if(!themeList.contains(it)) {
                 themeList.add(it)
                 tempsObject.theme.add(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnSelected)
-                Log.d("themeEvent", "$it добавлено")
             }else{
                 themeList.remove(it)
-                view.findViewById<TextView>(R.id.textViewTheme).setTextAppearance(R.style.textViewStyleOnNotSelected)
-                Log.d("themeEvent", "$it удалено")
             }
             filterByCriteria()
             //
@@ -136,7 +132,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     override fun setDirections(directions: List<Direction>) {
-        var mList = mutableListOf<String>()
+        val mList = mutableListOf<String>()
         mList.add("Not selected...")
         directions.forEach {
             mList.add(it.name)
@@ -197,7 +193,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     var visivle = false
-    fun filterContainer(){
+    private fun filterContainer(){
         if(!visivle){
             binding.filterContainer.visibility = View.VISIBLE
             visivle = true
@@ -207,15 +203,15 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         }
     }
 
-    fun filterByCriteria(){
+    private fun filterByCriteria(){
         var filterByCriteriaList: MutableList<Creation> = mutableListOf()
         filterByCriteriaList = list.toMutableList()
 
-        if(tempsObject.author != "") { filterByCriteriaList.removeIf { it.author != tempsObject.author } }
-        if(tempsObject.direction != "") { filterByCriteriaList.removeIf { it.direction != tempsObject.direction }}
-        if(tempsObject.genre != "") { filterByCriteriaList.removeIf { it.genre != tempsObject.genre }}
-        if(tempsObject.period != "") {filterByCriteriaList.removeIf { it.period != tempsObject.period }}
-        if(themeList != null) {filterByCriteriaList.removeIf { !it.theme.containsAll(themeList)}}
+        if(tempsObject.author.isNotEmpty()) { filterByCriteriaList.filter { it.author == tempsObject.author } }
+        if(tempsObject.direction.isNotEmpty()) { filterByCriteriaList.filter { it.direction == tempsObject.direction }}
+        if(tempsObject.genre.isNotEmpty()) { filterByCriteriaList.filter { it.genre == tempsObject.genre }}
+        if(tempsObject.period.isNotEmpty()) {filterByCriteriaList.filter { it.period == tempsObject.period }}
+        if(themeList.isNotEmpty()) {filterByCriteriaList.filter { it.theme.containsAll(themeList)}}
         adapter.models = filterByCriteriaList
     }
 

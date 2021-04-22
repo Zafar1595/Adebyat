@@ -10,16 +10,13 @@ class AuthorPresenter(private val firebase: FirebaseManager) {
         this.view = view
     }
 
-    fun getAllAuthors(){
+    fun getAllAuthors() {
         view.setLoading(true)
         firebase.getAuthors(
-            {
-                var mList: MutableList<Author> = mutableListOf()
-                it.forEach {
-                    if(it.name != null){
-                        mList.add(it)
-
-                    }
+            { authorList->
+                val mList: MutableList<Author> = mutableListOf()
+                authorList.forEach { author->
+                    author.name?.let { mList.add(author) }
                 }
                 view.setData(mList)
             },
