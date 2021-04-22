@@ -160,5 +160,4 @@ class FirebaseManager(private val db: FirebaseFirestore) {
                 }
             }
     }
-
 }

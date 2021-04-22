@@ -19,9 +19,9 @@ class AuthorInfoActivity : AppCompatActivity() {
         setData()
     }
 
-    fun setData(){
-        var bio = intent.getStringExtra("bio")
-        var imageUrl = intent.getStringExtra("imageUrl")
+    private fun setData(){
+        val bio = intent.getStringExtra("bio")
+        val imageUrl = intent.getStringExtra("imageUrl")
         binding.textViewAuthorBio.text = bio
         if (imageUrl != "") {
             Glide.with(this).load(imageUrl).into(binding.imageViewAuthorImage)

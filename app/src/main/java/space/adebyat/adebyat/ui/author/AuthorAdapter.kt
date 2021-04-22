@@ -35,7 +35,7 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
             itemView.findViewById<TextView>(R.id.textViewPoetsName).text = author.name
             itemView.findViewById<TextView>(R.id.textViewPoetsDate).text = author.date
             if(author.image_url != ""){
-                var imageView: ImageView = itemView.findViewById(R.id.imageViewPoets)
+                val imageView: ImageView = itemView.findViewById(R.id.imageViewPoets)
                 Glide.with(itemView).load(author.image_url).into(imageView)
             }
             //image set

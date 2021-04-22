@@ -1,15 +1,10 @@
 package space.adebyat.adebyat.ui.filter
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.*
@@ -17,18 +12,18 @@ import space.adebyat.adebyat.databinding.FragmentFilterBinding
 import space.adebyat.adebyat.ui.creation.CreationAdapter
 import space.adebyat.adebyat.ui.creation.ThemeAdapter
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
+import java.util.*
 
-class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
+class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
 
     var adapter = CreationAdapter()
-    lateinit var binding: FragmentFilterBinding
+    private lateinit var binding: FragmentFilterBinding
     private val presenter: FilterPresenter by inject()
     private var list: List<Creation> = listOf()
     private var tempsObject: Creation = Creation()
-    var themeList: MutableList<String> = mutableListOf()
-    var adapterTheme = ThemeAdapter()
+    private var themeList: MutableList<String> = mutableListOf()
+    private var adapterTheme = ThemeAdapter()
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFilterBinding.bind(view)
@@ -39,10 +34,10 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         presenter.getAllCreations()
         presenter.getData()
         adapterTheme.setOnItemClickListener {
-            if(!themeList.contains(it)) {
+            if (!themeList.contains(it)) {
                 themeList.add(it)
                 tempsObject.theme.add(it)
-            }else{
+            } else {
                 themeList.remove(it)
             }
             filterByCriteria()
@@ -60,10 +55,11 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         binding.imageButtonFilter.setOnClickListener {
             filterContainer()
         }
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
                     filterByName(p0)
@@ -73,40 +69,39 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         })
 
         binding.autoCompleteAuthors.setOnItemClickListener { adapterView, _, i, _ ->
-            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
                 tempsObject.author = adapterView.getItemAtPosition(i).toString()
-            }else{
+            } else {
                 tempsObject.author = ""
             }
             filterByCriteria()
         }
 
         binding.autoCompleteDirections.setOnItemClickListener { adapterView, _, i, _ ->
-            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
                 tempsObject.direction = adapterView.getItemAtPosition(i).toString()
-            }else{
+            } else {
                 tempsObject.direction = ""
             }
             filterByCriteria()
         }
         binding.autoCompleteGenre.setOnItemClickListener { adapterView, _, i, _ ->
-            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
                 tempsObject.genre = adapterView.getItemAtPosition(i).toString()
-            }else{
+            } else {
                 tempsObject.genre = ""
             }
             filterByCriteria()
         }
         binding.autoCompletePeriod.setOnItemClickListener { adapterView, _, i, _ ->
-            if(adapterView.getItemAtPosition(i).toString() != "Not selected...") {
+            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
                 tempsObject.period = adapterView.getItemAtPosition(i).toString()
-            }else{
+            } else {
                 tempsObject.period = ""
             }
             filterByCriteria()
         }
     }
-
 
 
     override fun setCreations(creation: List<Creation>) {
@@ -120,9 +115,9 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     override fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBar.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBar.visibility = View.GONE
         }
     }
@@ -133,7 +128,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setDirections(directions: List<Direction>) {
         val mList = mutableListOf<String>()
-        mList.add("Not selected...")
+        mList.add("Saylanbadi...")
         directions.forEach {
             mList.add(it.name)
         }
@@ -143,7 +138,7 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setGenre(genres: List<Genre>) {
         val mList = mutableListOf<String>()
-        mList.add("Not selected...")
+        mList.add("Saylanbadi...")
         genres.forEach {
             mList.add(it.name)
         }
@@ -151,9 +146,9 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         binding.autoCompleteGenre.setAdapter(spinnerAdapter)
     }
 
-    override fun setPeriod(periods: List<space.adebyat.adebyat.data.Period>) {
-        var mList = mutableListOf<String>()
-        mList.add("Not selected...")
+    override fun setPeriod(periods: List<Period>) {
+        val mList = mutableListOf<String>()
+        mList.add("Saylanbadi...")
         periods.forEach {
             mList.add(it.name)
         }
@@ -162,8 +157,8 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
     }
 
     override fun setAuthors(authors: List<Author>) {
-        var mList = mutableListOf<String>()
-        mList.add("Not selected...")
+        val mList = mutableListOf<String>()
+        mList.add("Saylanbadi...")
         authors.forEach {
             mList.add(it.name)
         }
@@ -171,9 +166,9 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
         binding.autoCompleteAuthors.setAdapter(spinnerAdapter)
     }
 
-    fun selectionSort(list: List<Creation>): List<Creation> {
-        var listSorted: MutableList<Creation> = list as MutableList<Creation>
-        if(list.size > 1) {
+    private fun selectionSort(list: List<Creation>): List<Creation> {
+        val listSorted: MutableList<Creation> = list as MutableList<Creation>
+        if (list.size > 1) {
             for (i in listSorted.indices) {
                 var max = listSorted[i]
                 var maxId = i
@@ -184,45 +179,58 @@ class FragmentFilter: Fragment(R.layout.fragment_filter), FilterView {
                     }
                 }
                 // замена
-                var temp = listSorted[i]
-                listSorted[i] = max;
+                val temp = listSorted[i]
+                listSorted[i] = max
                 listSorted[maxId] = temp
             }
         }
         return listSorted
     }
 
-    var visivle = false
-    private fun filterContainer(){
-        if(!visivle){
+    private var visivle = false
+    private fun filterContainer() {
+        if (!visivle) {
             binding.filterContainer.visibility = View.VISIBLE
             visivle = true
-        }else{
+        } else {
             binding.filterContainer.visibility = View.GONE
             visivle = false
         }
     }
 
-    private fun filterByCriteria(){
-        var filterByCriteriaList: MutableList<Creation> = mutableListOf()
-        filterByCriteriaList = list.toMutableList()
+    private fun filterByCriteria() {
+        var filterByCriteriaList: MutableList<Creation> = list.toMutableList()
 
-        if(tempsObject.author.isNotEmpty()) { filterByCriteriaList.filter { it.author == tempsObject.author } }
-        if(tempsObject.direction.isNotEmpty()) { filterByCriteriaList.filter { it.direction == tempsObject.direction }}
-        if(tempsObject.genre.isNotEmpty()) { filterByCriteriaList.filter { it.genre == tempsObject.genre }}
-        if(tempsObject.period.isNotEmpty()) {filterByCriteriaList.filter { it.period == tempsObject.period }}
-        if(themeList.isNotEmpty()) {filterByCriteriaList.filter { it.theme.containsAll(themeList)}}
+        if (tempsObject.author.isNotEmpty()) {
+            filterByCriteriaList = filterByCriteriaList.
+            filter { it.author == tempsObject.author } as MutableList<Creation>
+        }
+        if (tempsObject.direction.isNotEmpty()) {
+            filterByCriteriaList = filterByCriteriaList.
+            filter { it.direction == tempsObject.direction } as MutableList<Creation>
+        }
+        if (tempsObject.genre.isNotEmpty()) {
+            filterByCriteriaList = filterByCriteriaList.
+            filter { it.genre == tempsObject.genre } as MutableList<Creation>
+        }
+        if (tempsObject.period.isNotEmpty()) {
+            filterByCriteriaList = filterByCriteriaList.
+            filter { it.period == tempsObject.period } as MutableList<Creation>
+        }
+        if (themeList.isNotEmpty()) {
+            filterByCriteriaList = filterByCriteriaList.
+            filter { it.theme.containsAll(themeList) } as MutableList<Creation>
+        }
         adapter.models = filterByCriteriaList
     }
 
-    fun filterByName(creationName: String){
-        var filteredList: MutableList<Creation> = mutableListOf()
+    fun filterByName(creationName: String) {
+        val filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
-            if(it.name.toLowerCase().contains(creationName.toLowerCase())){
+            if (it.name.toLowerCase(Locale.ROOT).contains(creationName.toLowerCase(Locale.ROOT))) {
                 filteredList.add(it)
             }
         }
         adapter.models = filteredList
     }
-
 }

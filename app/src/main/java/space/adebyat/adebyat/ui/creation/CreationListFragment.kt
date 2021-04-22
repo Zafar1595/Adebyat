@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -16,6 +15,7 @@ import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.data.Theme
 import space.adebyat.adebyat.databinding.FragmentCreationListBinding
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
+import java.util.*
 
 class CreationListFragment : Fragment(R.layout.fragment_creation_list), CreationView {
 
@@ -101,17 +101,17 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
     }
 
     fun search(creationName: String) {
-        var filteredList: MutableList<Creation> = mutableListOf()
+        val filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
-            if (it.name.toLowerCase().contains(creationName.toLowerCase())) {
+            if (it.name.toLowerCase(Locale.ROOT).contains(creationName.toLowerCase(Locale.ROOT))) {
                 filteredList.add(it)
             }
         }
         adapter.models = filteredList
     }
 
-    fun searchTheme(theme: List<String>) {
-        var themeList: MutableList<Creation> = mutableListOf()
+    private fun searchTheme(theme: List<String>) {
+        val themeList: MutableList<Creation> = mutableListOf()
         Log.d("themeEvent", "поиск")
 
         list.forEach {

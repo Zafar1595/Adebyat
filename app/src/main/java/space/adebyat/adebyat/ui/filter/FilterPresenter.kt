@@ -33,7 +33,7 @@ class FilterPresenter(private val firebase: FirebaseManager) {
         )
         firebase.getAuthors(
                 {
-                    var mList: MutableList<Author> = mutableListOf()
+                    val mList: MutableList<Author> = mutableListOf()
                     it.forEach {
                         if(it.name != null){
                             mList.add(it)

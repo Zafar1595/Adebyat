@@ -1,8 +1,5 @@
 package space.adebyat.adebyat.ui.creation
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.data.Creation
-import space.adebyat.adebyat.ui.MainActivity
-import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 
 class CreationAdapter: RecyclerView.Adapter<CreationAdapter.ListViewHolder>() {
 

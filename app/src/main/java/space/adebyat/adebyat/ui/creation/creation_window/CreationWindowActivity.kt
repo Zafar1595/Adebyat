@@ -9,17 +9,13 @@ import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
-import org.koin.android.ext.android.inject
 import space.adebyat.adebyat.R
-import space.adebyat.adebyat.data.Creation
 import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
-import java.io.Serializable
 import java.lang.Runnable
 
 class CreationWindowActivity : AppCompatActivity() {
@@ -44,9 +40,9 @@ class CreationWindowActivity : AppCompatActivity() {
         val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
-        if(isConnected){
+        if (isConnected) {
             setData(creationName, creationContent, creationUrl, true)
-        }else{
+        } else {
             setData(creationName, creationContent, creationUrl, false)
             Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
         }
@@ -95,7 +91,7 @@ class CreationWindowActivity : AppCompatActivity() {
         Thread(Runnable {
             while (mp != null) {
                 try {
-                    var msg = Message()
+                    val msg = Message()
                     msg.what = mp.currentPosition
                     handler.sendMessage(msg)
                     Thread.sleep(1000)
@@ -114,18 +110,18 @@ class CreationWindowActivity : AppCompatActivity() {
             binding.positionBar.progress = currentPosition
 
             // Update Labels
-            var elapsedTime = createTimeLabel(currentPosition)
+            val elapsedTime = createTimeLabel(currentPosition)
             binding.elapsedTimeLabel.text = elapsedTime
 
-            var remainingTime = createTimeLabel(totalTime - currentPosition)
+            val remainingTime = createTimeLabel(totalTime - currentPosition)
             binding.remainingTimeLabel.text = "-$remainingTime"
         }
     }
 
     fun createTimeLabel(time: Int): String {
         var timeLabel = ""
-        var min = time / 1000 / 60
-        var sec = time / 1000 % 60
+        val min = time / 1000 / 60
+        val sec = time / 1000 % 60
 
         timeLabel = "$min:"
         if (sec < 10) timeLabel += "0"
@@ -181,7 +177,7 @@ class CreationWindowActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if(binding.exoContainer.visibility == 0 && binding.playBtn.visibility == 0) {
+        if (binding.exoContainer.visibility == 0 && binding.playBtn.visibility == 0) {
             if (mp.isPlaying) {
                 mp.stop()
                 mp.release()
