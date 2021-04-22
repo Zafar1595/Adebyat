@@ -30,12 +30,7 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCreationListBinding.bind(view)
         binding.recyclerViewCreationList.adapter = adapter
-        binding.recyclerViewCreationList.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+
         binding.recyclerViewThemes.adapter = adapterTheme
 
         val name = args.name

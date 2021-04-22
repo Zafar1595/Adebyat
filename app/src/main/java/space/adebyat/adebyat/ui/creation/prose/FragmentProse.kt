@@ -34,7 +34,6 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProseBinding.bind(view)
         binding.recyclerViewProse.adapter = adapter
-        binding.recyclerViewProse.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.recyclerViewThemes.adapter = adapterTheme
         presenter.init(this)
         presenter.getCreation("Proza")

@@ -22,7 +22,7 @@ import space.adebyat.adebyat.ui.creation.ThemeAdapter
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 import java.util.*
 
-class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
+class FragmentPoetry : Fragment(R.layout.fragment_poetry), CreationView {
     lateinit var binding: FragmentPoetryBinding
     private val adapter = CreationAdapter()
     private val adapterTheme = ThemeAdapter()
@@ -34,7 +34,6 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPoetryBinding.bind(view)
         binding.recyclerViewPoetry.adapter = adapter
-        binding.recyclerViewPoetry.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.recyclerViewThemes.adapter = adapterTheme
 
@@ -51,18 +50,19 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         }
         val themeList: MutableList<String> = mutableListOf()
         adapterTheme.setOnItemClickListener {
-            if(!themeList.contains(it)) {
+            if (!themeList.contains(it)) {
                 themeList.add(it)
-            }else{
+            } else {
                 themeList.remove(it)
             }
             searchTheme(themeList)
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
                     search(p0)
@@ -83,9 +83,9 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
     }
 
     override fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBarPoetry.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBarPoetry.visibility = View.GONE
         }
     }
@@ -94,7 +94,7 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         adapterTheme.models = themes
     }
 
-    fun search(creationName: String){
+    fun search(creationName: String) {
         val filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
             if (it.name.toLowerCase(Locale.ROOT).contains(creationName.toLowerCase(Locale.ROOT))) {
@@ -104,12 +104,12 @@ class FragmentPoetry: Fragment(R.layout.fragment_poetry), CreationView {
         adapter.models = filteredList
     }
 
-    private fun searchTheme(theme: List<String>){
+    private fun searchTheme(theme: List<String>) {
         val themeList: MutableList<Creation> = mutableListOf()
         Log.d("themeEvent", "поиск")
 
         list.forEach {
-            if(it.theme.containsAll(theme)){
+            if (it.theme.containsAll(theme)) {
                 themeList.add(it)
             }
         }
