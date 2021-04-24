@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.author.AuthorFragment">
 
-
     <ProgressBar
         android:id="@+id/progress_bar_author"
         style="?android:attr/progressBarStyle"
@@ -36,6 +35,7 @@
         android:iconifiedByDefault="false"
         android:background="@drawable/b_ground_selected"
         android:paddingEnd="20dp"
+        android:queryBackground="@color/white"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView

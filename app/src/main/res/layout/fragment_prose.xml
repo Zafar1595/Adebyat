@@ -33,7 +33,8 @@
         android:iconifiedByDefault="false"
         android:queryHint="@string/search"
         android:background="@drawable/b_ground_selected"
-        android:paddingEnd="20dp"/>
+        android:paddingEnd="20dp"
+        android:queryBackground="@color/white"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_themes"

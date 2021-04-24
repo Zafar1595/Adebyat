@@ -1,6 +1,7 @@
 package space.adebyat.adebyat
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -11,6 +12,7 @@ import space.adebyat.adebyat.di.presenterModule
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val modules = listOf(dataModule, presenterModule)
         startKoin { // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()

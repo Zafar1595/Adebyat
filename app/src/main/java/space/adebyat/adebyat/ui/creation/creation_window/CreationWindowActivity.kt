@@ -177,7 +177,7 @@ class CreationWindowActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (binding.exoContainer.visibility == 0 && binding.playBtn.visibility == 0) {
+        if (binding.exoContainer.visibility == View.VISIBLE && binding.playBtn.visibility == 0) {
             if (mp.isPlaying) {
                 mp.stop()
                 mp.release()
