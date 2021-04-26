@@ -2,6 +2,7 @@ package space.adebyat.adebyat.ui.creation.creation_window
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
@@ -13,6 +14,13 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.*
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
@@ -21,10 +29,9 @@ import java.lang.Runnable
 class CreationWindowActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityCreationWindowBinding
-    private val mediaJob = Job()
-    private val mediaScope = CoroutineScope(Dispatchers.Main + mediaJob)
-    private lateinit var mp: MediaPlayer
-    private var totalTime: Int = 0
+
+    private lateinit var simpleExoPlayer: SimpleExoPlayer
+    private lateinit var mediaDataSourceFactory: DataSource.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +42,7 @@ class CreationWindowActivity : AppCompatActivity() {
         val creationName = intent.getStringExtra("creationName")!!
         val creationContent = intent.getStringExtra("creationContent")!!
         val creationUrl = intent.getStringExtra("creationUrl")!!
-
+        STREAM_URL = creationUrl
         //Проверка интернет соеденения
         val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -48,122 +55,15 @@ class CreationWindowActivity : AppCompatActivity() {
         }
     }
 
-    private fun mediaPlayerInitialization(url: String) = mediaScope.launch(Dispatchers.IO) {
-        mp = MediaPlayer().apply {
-            setAudioAttributes(
-                    AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .build()
-            )
-            setDataSource(url)
-            prepare()
-        }
-
-        mp.isLooping = true
-        totalTime = mp.duration
-        runOnUiThread {
-            // Stuff that updates the UI
-            setLoadingPlaying(false)
-            progressBarSetPosition()
-        }
-    }
-
-    private fun progressBarSetPosition() {
-        // Position Bar
-        binding.positionBar.max = totalTime
-        binding.positionBar.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                        if (fromUser) {
-                            mp.seekTo(progress)
-                        }
-                    }
-
-                    override fun onStartTrackingTouch(p0: SeekBar?) {
-                    }
-
-                    override fun onStopTrackingTouch(p0: SeekBar?) {
-                    }
-                }
-        )
-        // Thread
-        Thread(Runnable {
-            while (mp != null) {
-                try {
-                    val msg = Message()
-                    msg.what = mp.currentPosition
-                    handler.sendMessage(msg)
-                    Thread.sleep(1000)
-                } catch (e: InterruptedException) {
-                }
-            }
-        }).start()
-    }
-
-    @SuppressLint("HandlerLeak")
-    var handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            var currentPosition = msg.what
-
-            // Update positionBar
-            binding.positionBar.progress = currentPosition
-
-            // Update Labels
-            val elapsedTime = createTimeLabel(currentPosition)
-            binding.elapsedTimeLabel.text = elapsedTime
-
-            val remainingTime = createTimeLabel(totalTime - currentPosition)
-            binding.remainingTimeLabel.text = "-$remainingTime"
-        }
-    }
-
-    fun createTimeLabel(time: Int): String {
-        var timeLabel = ""
-        val min = time / 1000 / 60
-        val sec = time / 1000 % 60
-
-        timeLabel = "$min:"
-        if (sec < 10) timeLabel += "0"
-        timeLabel += sec
-
-        return timeLabel
-    }
-
-    fun playBtnClick(v: View) {
-        if (mp.isPlaying) {
-            // Stop
-            mp.pause()
-            binding.playBtn.setBackgroundResource(R.drawable.play)
-
-        } else {
-            // Start
-            mp.start()
-            binding.playBtn.setBackgroundResource(R.drawable.pause)
-        }
-    }
-
-    private fun setLoadingPlaying(loading: Boolean) {
-        if (loading) {
-            binding.progressBarPlaying.visibility = View.VISIBLE
-            binding.playBtn.visibility = View.GONE
-        } else {
-            binding.progressBarPlaying.visibility = View.GONE
-            binding.playBtn.visibility = View.VISIBLE
-        }
-    }
-
     private fun setData(name: String, content: String, url: String, isConnected: Boolean) {
         setLoading(false)
         binding.textViewCreationName.text = name
         binding.textViewCreationText.text = content
 
         if (url != "" && isConnected) {
-            binding.exoContainer.visibility = View.VISIBLE
-            mediaPlayerInitialization(url)
-            setLoadingPlaying(true)
+            binding.playerView.visibility = View.VISIBLE
         } else {
-            binding.exoContainer.visibility = View.GONE
+            binding.playerView.visibility = View.GONE
         }
     }
 
@@ -175,20 +75,57 @@ class CreationWindowActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (binding.exoContainer.visibility == View.VISIBLE && binding.playBtn.visibility == 0) {
-            if (mp.isPlaying) {
-                mp.stop()
-                mp.release()
-            }
-        }
-        mediaScope.cancel()
+    private fun initializePlayer() {
+
+        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
+
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
+            MediaItem.fromUri(STREAM_URL))
+
+        val mediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
+
+        simpleExoPlayer = SimpleExoPlayer.Builder(this)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
+
+        simpleExoPlayer.addMediaSource(mediaSource)
+
+        simpleExoPlayer.playWhenReady = true
+
+        binding.playerView.setShutterBackgroundColor(Color.TRANSPARENT)
+        binding.playerView.player = simpleExoPlayer
+        binding.playerView.requestFocus()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaScope.cancel()
+    private fun releasePlayer() {
+        simpleExoPlayer.release()
     }
 
+    public override fun onStart() {
+        super.onStart()
+
+        if (Util.SDK_INT > 23) initializePlayer()
+    }
+
+    public override fun onResume() {
+        super.onResume()
+
+        if (Util.SDK_INT <= 23) initializePlayer()
+    }
+
+    public override fun onPause() {
+        super.onPause()
+
+        if (Util.SDK_INT <= 23) releasePlayer()
+    }
+
+    public override fun onStop() {
+        super.onStop()
+
+        if (Util.SDK_INT > 23) releasePlayer()
+    }
+
+    companion object {
+        var STREAM_URL = ""
+    }
 }
