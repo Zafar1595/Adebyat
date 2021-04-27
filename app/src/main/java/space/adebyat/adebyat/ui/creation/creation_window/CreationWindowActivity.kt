@@ -1,17 +1,11 @@
 package space.adebyat.adebyat.ui.creation.creation_window
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.view.View
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.MediaItem
@@ -21,10 +15,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.coroutines.*
-import space.adebyat.adebyat.R
 import space.adebyat.adebyat.databinding.ActivityCreationWindowBinding
-import java.lang.Runnable
 
 class CreationWindowActivity : AppCompatActivity() {
 
@@ -80,13 +71,13 @@ class CreationWindowActivity : AppCompatActivity() {
         mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
         val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
-            MediaItem.fromUri(STREAM_URL))
+                MediaItem.fromUri(STREAM_URL))
 
         val mediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
 
         simpleExoPlayer = SimpleExoPlayer.Builder(this)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build()
+                .setMediaSourceFactory(mediaSourceFactory)
+                .build()
 
         simpleExoPlayer.addMediaSource(mediaSource)
 

@@ -24,11 +24,14 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
     private var themeList: MutableList<String> = mutableListOf()
     private var adapterTheme = ThemeAdapter()
 
+    companion object{
+        const val SAYLANBADI = "Saylanbadı..."
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFilterBinding.bind(view)
         binding.recyclerView.adapter = adapter
-        //binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.recyclerViewThemes.adapter = adapterTheme
         presenter.init(this)
         presenter.getAllCreations()
@@ -69,7 +72,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
         })
 
         binding.autoCompleteAuthors.setOnItemClickListener { adapterView, _, i, _ ->
-            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
+            if (adapterView.getItemAtPosition(i).toString() != SAYLANBADI) {
                 tempsObject.author = adapterView.getItemAtPosition(i).toString()
             } else {
                 tempsObject.author = ""
@@ -78,7 +81,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
         }
 
         binding.autoCompleteDirections.setOnItemClickListener { adapterView, _, i, _ ->
-            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
+            if (adapterView.getItemAtPosition(i).toString() != SAYLANBADI) {
                 tempsObject.direction = adapterView.getItemAtPosition(i).toString()
             } else {
                 tempsObject.direction = ""
@@ -86,7 +89,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
             filterByCriteria()
         }
         binding.autoCompleteGenre.setOnItemClickListener { adapterView, _, i, _ ->
-            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
+            if (adapterView.getItemAtPosition(i).toString() != SAYLANBADI) {
                 tempsObject.genre = adapterView.getItemAtPosition(i).toString()
             } else {
                 tempsObject.genre = ""
@@ -94,7 +97,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
             filterByCriteria()
         }
         binding.autoCompletePeriod.setOnItemClickListener { adapterView, _, i, _ ->
-            if (adapterView.getItemAtPosition(i).toString() != "Saylanbadi...") {
+            if (adapterView.getItemAtPosition(i).toString() != SAYLANBADI) {
                 tempsObject.period = adapterView.getItemAtPosition(i).toString()
             } else {
                 tempsObject.period = ""
@@ -128,7 +131,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setDirections(directions: List<Direction>) {
         val mList = mutableListOf<String>()
-        mList.add("Saylanbadi...")
+        mList.add("Saylanbadı...")
         directions.forEach {
             mList.add(it.name)
         }
@@ -138,7 +141,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setGenre(genres: List<Genre>) {
         val mList = mutableListOf<String>()
-        mList.add("Saylanbadi...")
+        mList.add(SAYLANBADI)
         genres.forEach {
             mList.add(it.name)
         }
@@ -148,7 +151,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setPeriod(periods: List<Period>) {
         val mList = mutableListOf<String>()
-        mList.add("Saylanbadi...")
+        mList.add(SAYLANBADI)
         periods.forEach {
             mList.add(it.name)
         }
@@ -158,7 +161,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
 
     override fun setAuthors(authors: List<Author>) {
         val mList = mutableListOf<String>()
-        mList.add("Saylanbadi...")
+        mList.add(SAYLANBADI)
         authors.forEach {
             mList.add(it.name)
         }
