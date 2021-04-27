@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name">Adebyat</string>
 
-    <string name="filter">Filer</string>
-    <string name="about">About</string>
-    <string name="author">Author</string>
-    <string name="poetry">Poetry</string>
-    <string name="prose">Prose</string>
+    <string name="filter">Bas bet</string>
+    <string name="about">Haqqında</string>
+    <string name="author">Avtor</string>
+    <string name="poetry">Poeziya</string>
+    <string name="prose">Proza</string>
+    <string name="search">Izlew</string>
+    <string name="authors">Avtorlar</string>
+    <string name="directions">Jónelis</string>
+    <string name="genre">Janr</string>
+    <string name="period">Dáwirler</string>
+    <string name="theme">Theme</string>
+    <string name="auto_complete_default_text">Saylanbadı...</string>
+    <string name="about_text">
+        About \n
+        Version: 1.0\n
+        Company: TexnoPOS\n
+        Mail: texnopos@gmail.com\n
+        Phone: +9989XXXXXXXX
+    </string>
+
 </resources>

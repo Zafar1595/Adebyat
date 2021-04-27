@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.author.AuthorFragment">
 
-
     <ProgressBar
         android:id="@+id/progress_bar_author"
         style="?android:attr/progressBarStyle"
@@ -18,13 +17,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="invisible"
         />
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp">
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:queryHint="@string/search"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/b_ground_selected"
+        android:paddingEnd="20dp"
+        android:queryBackground="@color/white"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_author"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 

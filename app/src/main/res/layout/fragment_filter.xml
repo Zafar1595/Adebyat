@@ -5,14 +5,188 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.filter.FragmentFilter">
-    <TextView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp">
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:iconifiedByDefault="false"
+            android:queryHint="@string/search"
+            android:background="@drawable/b_ground_selected"
+            android:queryBackground="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonFilter"/>
+        <ImageButton
+            android:id="@+id/imageButtonFilter"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_group_17"
+            app:layout_constraintTop_toTopOf="@id/search_view"
+            app:layout_constraintBottom_toBottomOf="@id/search_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/filter_btn_click"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintStart_toEndOf="@id/search_view"
+            android:scaleType="centerCrop"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        android:visibility="gone"
+        android:background="@drawable/layout_bg_item_creation"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingBottom="5dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/containerAuthor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/authors"
+            android:paddingTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/containerDirection"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteAuthors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/auto_complete_default_text"
+                android:textSize="14sp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/containerDirection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/directions"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/containerAuthor"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteDirections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="@string/auto_complete_default_text"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/containerGenre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/genre"
+            android:paddingTop="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintTop_toBottomOf="@id/containerAuthor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/containerPeriod"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteGenre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="@string/auto_complete_default_text"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/containerPeriod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/period"
+            android:paddingTop="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintTop_toBottomOf="@id/containerDirection"
+            app:layout_constraintStart_toEndOf="@id/containerGenre"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/autoCompletePeriod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="@string/auto_complete_default_text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/containerGenre"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            app:spanCount="3"
+            />
+    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Filter"
-        android:textSize="36sp"/>
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/filterContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

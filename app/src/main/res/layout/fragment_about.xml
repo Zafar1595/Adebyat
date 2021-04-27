@@ -13,7 +13,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="About"
-        android:textSize="36sp"/>
+        android:text="@string/about_text"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:background="@drawable/bg_text_view"
+        android:paddingEnd="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

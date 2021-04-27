@@ -1,6 +1,6 @@
 package space.adebyat.adebyat.data
 
-class Directions(
+class Direction(
     val id: String = "",
     val name: String = ""
 )
