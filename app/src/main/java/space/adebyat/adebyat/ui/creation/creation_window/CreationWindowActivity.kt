@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -94,24 +95,29 @@ class CreationWindowActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
+        Log.d("жизненные цыклы", "onStart")
 
         if (Util.SDK_INT > 23) initializePlayer()
     }
 
     public override fun onResume() {
         super.onResume()
-
+        Log.d("жизненные цыклы", "onResume")
+        //simpleExoPlayer.play()
         if (Util.SDK_INT <= 23) initializePlayer()
     }
 
     public override fun onPause() {
         super.onPause()
+        //simpleExoPlayer.pause()
+        Log.d("жизненные цыклы", "onPause")
 
         if (Util.SDK_INT <= 23) releasePlayer()
     }
 
     public override fun onStop() {
         super.onStop()
+        Log.d("жизненные цыклы", "onStop")
 
         if (Util.SDK_INT > 23) releasePlayer()
     }

@@ -12,7 +12,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     }
 
     fun getAuthors(onSuccess: (List<Author>) -> Unit, onFailure: (msg: String?) -> Unit) {
-        db.collection(AUTHORS).get()
+        db.collection(AUTHORS).whereEqualTo("allowed",true).get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Author>()
                 it.documents.forEach { document ->
@@ -30,7 +30,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
 
     fun getAllCreations(onSuccess: (List<Creation>) -> Unit, onFailure: (msg: String?) -> Unit) {
 
-        db.collection(CREATION)
+        db.collection(CREATION).whereEqualTo("allowed",true)
             .get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Creation>()

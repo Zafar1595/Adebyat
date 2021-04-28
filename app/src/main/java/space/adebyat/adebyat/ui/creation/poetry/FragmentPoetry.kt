@@ -106,7 +106,6 @@ class FragmentPoetry : Fragment(R.layout.fragment_poetry), CreationView {
 
     private fun searchTheme(theme: List<String>) {
         val themeList: MutableList<Creation> = mutableListOf()
-        Log.d("themeEvent", "поиск")
 
         list.forEach {
             if (it.theme.containsAll(theme)) {
