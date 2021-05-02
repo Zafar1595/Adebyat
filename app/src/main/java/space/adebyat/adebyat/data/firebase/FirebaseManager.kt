@@ -9,6 +9,20 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     companion object {
         const val AUTHORS = "autors"
         const val CREATION = "creation"
+        const val ABOUT = "about"
+    }
+
+    fun getAbout(onSuccess: (about: About) -> Unit){
+        var about = About()
+        db.collection(ABOUT).get()
+            .addOnSuccessListener {
+                it.documents.forEach { document ->
+                    document.toObject(About::class.java)?.let { aboutIt ->
+                        about = aboutIt
+                    }
+                }
+                onSuccess.invoke(about)
+            }
     }
 
     fun getAuthors(onSuccess: (List<Author>) -> Unit, onFailure: (msg: String?) -> Unit) {
