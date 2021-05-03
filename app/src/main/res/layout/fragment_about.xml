@@ -18,12 +18,12 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp"
-
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
         >
     <TextView
         android:id="@+id/textViewAbout"
@@ -32,9 +32,6 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         android:background="@drawable/bg_text_view"
-        android:paddingEnd="5dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:padding="8dp"
         />
     </ScrollView>
