@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -50,7 +51,7 @@ class CreationWindowActivity : AppCompatActivity() {
     private fun setData(name: String, content: String, url: String, isConnected: Boolean) {
         setLoading(false)
         binding.textViewCreationName.text = name
-        binding.textViewCreationText.text = content
+        binding.textViewCreationText.text = Html.fromHtml(content)
 
         if (url != "" && isConnected) {
             binding.playerView.visibility = View.VISIBLE

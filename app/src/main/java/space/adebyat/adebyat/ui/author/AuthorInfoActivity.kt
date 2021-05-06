@@ -2,6 +2,7 @@ package space.adebyat.adebyat.ui.author
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import com.bumptech.glide.Glide
 import space.adebyat.adebyat.R
 import space.adebyat.adebyat.databinding.ActivityAuthorInfoBinding
@@ -22,7 +23,7 @@ class AuthorInfoActivity : AppCompatActivity() {
     private fun setData(){
         val bio = intent.getStringExtra("bio")
         val imageUrl = intent.getStringExtra("imageUrl")
-        binding.textViewAuthorBio.text = bio
+        binding.textViewAuthorBio.text = Html.fromHtml(bio)
         if (imageUrl != "") {
             Glide.with(this).load(imageUrl).into(binding.imageViewAuthorImage)
         }

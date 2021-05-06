@@ -10,6 +10,8 @@ class FirebaseManager(private val db: FirebaseFirestore) {
         const val AUTHORS = "autors"
         const val CREATION = "creation"
         const val ABOUT = "about"
+        const val PERIOD = "period"
+        const val ALLOWED = "allowed"
     }
 
     fun getAbout(onSuccess: (about: About) -> Unit){
@@ -26,7 +28,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
     }
 
     fun getAuthors(onSuccess: (List<Author>) -> Unit, onFailure: (msg: String?) -> Unit) {
-        db.collection(AUTHORS).whereEqualTo("allowed",true).get()
+        db.collection(AUTHORS).whereEqualTo(ALLOWED,true).get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Author>()
                 it.documents.forEach { document ->
@@ -44,7 +46,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
 
     fun getAllCreations(onSuccess: (List<Creation>) -> Unit, onFailure: (msg: String?) -> Unit) {
 
-        db.collection(CREATION).whereEqualTo("allowed",true)
+        db.collection(CREATION).whereEqualTo(ALLOWED,true)
             .get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Creation>()
@@ -121,7 +123,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
         onSuccess: (List<Period>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        db.collection("period").get()
+        db.collection(PERIOD).get()
             .addOnSuccessListener {
                 val mList: MutableList<Period> = mutableListOf()
                 it.documents.forEach { document ->
@@ -146,7 +148,7 @@ class FirebaseManager(private val db: FirebaseFirestore) {
         }
 
         db.collection("creation")
-            .whereEqualTo(columnName, str)
+            .whereEqualTo(columnName, str).whereEqualTo(ALLOWED,true)
             .get()
             .addOnSuccessListener {
                 val mList = mutableListOf<Creation>()
