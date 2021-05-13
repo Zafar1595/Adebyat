@@ -8,7 +8,7 @@ class Creation(
         var author: String = "",
         var direction: String = "",
         var genre: String = "",
-        var theme: MutableList<String> = mutableListOf(),
+        var theme: MutableList<String>? = mutableListOf(),
         var period: String = "",
         var viewed: Int = 0
 )

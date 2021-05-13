@@ -107,7 +107,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         Log.d("themeEvent", "поиск")
 
         list.forEach {
-            if(it.theme.containsAll(theme)){
+            if(it.theme?.containsAll(theme) == true){
                 themeList.add(it)
             }
         }

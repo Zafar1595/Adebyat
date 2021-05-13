@@ -108,7 +108,7 @@ class FragmentPoetry : Fragment(R.layout.fragment_poetry), CreationView {
         val themeList: MutableList<Creation> = mutableListOf()
 
         list.forEach {
-            if (it.theme.containsAll(theme)) {
+            if (it.theme?.containsAll(theme) == true) {
                 themeList.add(it)
             }
         }

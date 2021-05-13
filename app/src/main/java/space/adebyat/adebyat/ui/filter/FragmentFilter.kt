@@ -39,7 +39,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
         adapterTheme.setOnItemClickListener {
             if (!themeList.contains(it)) {
                 themeList.add(it)
-                tempsObject.theme.add(it)
+                tempsObject.theme?.add(it)
             } else {
                 themeList.remove(it)
             }
@@ -222,7 +222,7 @@ class FragmentFilter : Fragment(R.layout.fragment_filter), FilterView {
         }
         if (themeList.isNotEmpty()) {
             filterByCriteriaList = filterByCriteriaList.
-            filter { it.theme.containsAll(themeList) } as MutableList<Creation>
+            filter { it.theme?.containsAll(themeList) == true } as MutableList<Creation>
         }
         adapter.models = filterByCriteriaList
     }
