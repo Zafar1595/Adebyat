@@ -1,6 +1,7 @@
 package space.adebyat.adebyat.di
 
 import com.google.firebase.firestore.FirebaseFirestore
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import space.adebyat.adebyat.data.firebase.FirebaseManager
 import space.adebyat.adebyat.ui.about.AboutPresenter
