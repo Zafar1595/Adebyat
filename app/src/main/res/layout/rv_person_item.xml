@@ -45,6 +45,8 @@
                     android:layout_height="wrap_content"
                     android:text="Name"
                     android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     />
 
                 <TextView

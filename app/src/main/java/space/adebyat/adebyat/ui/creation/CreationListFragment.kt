@@ -114,6 +114,11 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
                 themeList.add(it)
             }
         }
-        adapter.models = themeList
+        if (theme.isEmpty()) {
+            adapter.models = list
+        } else {
+            adapter.models = themeList
+        }
+//        adapter.models = themeList
     }
 }
