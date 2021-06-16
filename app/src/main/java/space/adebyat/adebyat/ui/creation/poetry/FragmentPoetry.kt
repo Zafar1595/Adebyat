@@ -105,14 +105,27 @@ class FragmentPoetry : Fragment(R.layout.fragment_poetry), CreationView {
     }
 
     private fun searchTheme(theme: List<String>) {
-        val themeList: MutableList<Creation> = mutableListOf()
-        Log.d("themeEvent", "поиск")
+        var themeList: MutableList<Creation> = mutableListOf()
 
         list.forEach {
-            if (it.theme.containsAll(theme)) {
+            if (it.theme?.containsAll(theme) == true) {
                 themeList.add(it)
             }
         }
-        adapter.models = themeList
+        if (theme.isEmpty()) {
+            adapter.models = list
+        } else {
+            adapter.models = themeList
+        }
+//        themeList = list.
+//        filter { it.theme?.containsAll(theme) == true } as MutableList<Creation>
+//
+//        adapter.models = themeList
+
+//        if (themeList.isNotEmpty()) {
+//            filterByCriteriaList = filterByCriteriaList.
+//            filter { it.theme?.containsAll(themeList) == true } as MutableList<Creation>
+//        }
+//        adapter.models = filterByCriteriaList
     }
 }

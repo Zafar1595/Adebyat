@@ -22,7 +22,7 @@ import space.adebyat.adebyat.ui.creation.ThemeAdapter
 import space.adebyat.adebyat.ui.creation.creation_window.CreationWindowActivity
 import java.util.*
 
-class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
+class FragmentProse : Fragment(R.layout.fragment_prose), CreationView {
     lateinit var binding: FragmentProseBinding
     private var adapter = CreationAdapter()
     private val presenter: CreationPresenter by inject()
@@ -49,18 +49,19 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
 
         val themeList: MutableList<String> = mutableListOf()
         adapterTheme.setOnItemClickListener {
-            if(!themeList.contains(it)) {
+            if (!themeList.contains(it)) {
                 themeList.add(it)
-            }else{
+            } else {
                 themeList.remove(it)
             }
             searchTheme(themeList)
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
                     search(p0)
@@ -81,9 +82,9 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
     }
 
     override fun setLoading(loading: Boolean) {
-        if(loading) {
+        if (loading) {
             binding.progressBarProse.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.progressBarProse.visibility = View.GONE
         }
     }
@@ -92,7 +93,7 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         adapterTheme.models = themes
     }
 
-    fun search(creationName: String){
+    fun search(creationName: String) {
         val filteredList: MutableList<Creation> = mutableListOf()
         list.forEach {
             if (it.name.toLowerCase(Locale.ROOT).contains(creationName.toLowerCase(Locale.ROOT))) {
@@ -102,15 +103,20 @@ class FragmentProse: Fragment(R.layout.fragment_prose), CreationView {
         adapter.models = filteredList
     }
 
-    private fun searchTheme(theme: List<String>){
+    private fun searchTheme(theme: List<String>) {
         val themeList: MutableList<Creation> = mutableListOf()
         Log.d("themeEvent", "поиск")
 
         list.forEach {
-            if(it.theme.containsAll(theme)){
+            if (it.theme?.containsAll(theme) == true) {
                 themeList.add(it)
             }
         }
-        adapter.models = themeList
+        if (theme.isEmpty()) {
+            adapter.models = list
+        } else {
+            adapter.models = themeList
+        }
+//        adapter.models = themeList
     }
 }

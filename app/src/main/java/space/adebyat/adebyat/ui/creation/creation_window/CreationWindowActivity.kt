@@ -4,10 +4,15 @@ import android.content.Context
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
@@ -35,7 +40,8 @@ class CreationWindowActivity : AppCompatActivity() {
         val creationUrl = intent.getStringExtra("creationUrl")!!
         STREAM_URL = creationUrl
         //Проверка интернет соеденения
-        val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
         if (isConnected) {
@@ -46,10 +52,12 @@ class CreationWindowActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setData(name: String, content: String, url: String, isConnected: Boolean) {
         setLoading(false)
         binding.textViewCreationName.text = name
-        binding.textViewCreationText.text = content
+        binding.textViewCreationText.text =
+            HtmlCompat.fromHtml(content, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         if (url != "" && isConnected) {
             binding.playerView.visibility = View.VISIBLE
@@ -68,16 +76,18 @@ class CreationWindowActivity : AppCompatActivity() {
 
     private fun initializePlayer() {
 
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
+        mediaDataSourceFactory =
+            DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
         val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
-                MediaItem.fromUri(STREAM_URL))
+            MediaItem.fromUri(STREAM_URL)
+        )
 
         val mediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
 
         simpleExoPlayer = SimpleExoPlayer.Builder(this)
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build()
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
 
         simpleExoPlayer.addMediaSource(mediaSource)
 
@@ -94,24 +104,29 @@ class CreationWindowActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
+        Log.d("жизненные цыклы", "onStart")
 
         if (Util.SDK_INT > 23) initializePlayer()
     }
 
     public override fun onResume() {
         super.onResume()
-
+        Log.d("жизненные цыклы", "onResume")
+        //simpleExoPlayer.play()
         if (Util.SDK_INT <= 23) initializePlayer()
     }
 
     public override fun onPause() {
         super.onPause()
+        //simpleExoPlayer.pause()
+        Log.d("жизненные цыклы", "onPause")
 
         if (Util.SDK_INT <= 23) releasePlayer()
     }
 
     public override fun onStop() {
         super.onStop()
+        Log.d("жизненные цыклы", "onStop")
 
         if (Util.SDK_INT > 23) releasePlayer()
     }

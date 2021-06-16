@@ -10,6 +10,6 @@
     <color name="bg">#88000000</color>
     <color name="bg_item_person_constraint_layout">#CCFFFFFF</color>
     <color name="bg_item_creation">#B3FFFFFF</color>
-    <color name="bg_text_view">#CCFFFFFF</color>
+    <color name="bg_text_view">#E6FFFFFF</color>
     <color name="status_bar_color">#265B76</color>
 </resources>

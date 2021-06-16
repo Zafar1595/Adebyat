@@ -110,10 +110,15 @@ class CreationListFragment : Fragment(R.layout.fragment_creation_list), Creation
         Log.d("themeEvent", "поиск")
 
         list.forEach {
-            if (it.theme.containsAll(theme)) {
+            if (it.theme?.containsAll(theme) == true) {
                 themeList.add(it)
             }
         }
-        adapter.models = themeList
+        if (theme.isEmpty()) {
+            adapter.models = list
+        } else {
+            adapter.models = themeList
+        }
+//        adapter.models = themeList
     }
 }

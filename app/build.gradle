@@ -41,6 +41,7 @@ android {
 ext {
     koin_version = '2.2.0-alpha-1'
     nav_version = "2.3.4"
+    lottieVersion = '3.7.0'
 }
 
 dependencies {
@@ -61,22 +62,32 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     //koin
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-core-ext:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
+
    // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
     //Сoroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+
     //Image View glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
     //ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.13.2'
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

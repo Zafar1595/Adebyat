@@ -36,7 +36,6 @@ class CreationPresenter(private val firebase: FirebaseManager) {
     fun viewedIncrement(creation: Creation){
         creation.viewed++
         firebase.viewedIncrement(creation)
-        //fireBase
     }
 
 }

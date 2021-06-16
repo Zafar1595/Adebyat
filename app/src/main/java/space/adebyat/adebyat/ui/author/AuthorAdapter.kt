@@ -27,9 +27,6 @@ class AuthorAdapter: RecyclerView.Adapter<AuthorAdapter.ListViewHolder>() {
     fun setOnItemClickListenerAuthorInfo(onItemClickAuthorInfo:(author: Author)-> Unit){
         this.onItemClickAuthorInfo = onItemClickAuthorInfo
     }
-//    private var onItemClick:()-> Unit = {}
-//    fun setOnItemClickListener(function: () -> Unit) {
-//    }
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(author: Author){
             itemView.findViewById<TextView>(R.id.textViewPoetsName).text = author.name
